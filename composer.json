@@ -18,5 +18,8 @@
         "psr-4": {
             "NationalIdentificationNumber\\Tests\\": "tests"
         }
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^9.0"
     }
 }

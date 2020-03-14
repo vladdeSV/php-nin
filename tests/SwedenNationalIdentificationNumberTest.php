@@ -9,14 +9,6 @@ use NationalIdentificationNumber\SwedenNationalIdentificationNumber;
 
 class SwedenNationalIdentificationNumberTest extends TestCase
 {
-    /*
-
-        $str = "200314435";
-        $numbers = array_map(fn($n) => (int)$n, str_split($str));
-        var_dump(SwedenNationalIdentificationNumber::calculateValueChecksum(array_sum(SwedenNationalIdentificationNumber::applyLuhnAlgorithm($numbers))));
-
-     */
-
     public function testValid()
     {
         self::assertNotNull(SwedenNationalIdentificationNumber::parse('190228-2258'));
@@ -28,7 +20,7 @@ class SwedenNationalIdentificationNumberTest extends TestCase
     public function testInvalid()
     {
         self::assertNull(SwedenNationalIdentificationNumber::parse('abc'));
-        self::assertNull(SwedenNationalIdentificationNumber::parse('1234567890')); // missing separator
+        self::assertNull(SwedenNationalIdentificationNumber::parse('1902282258')); // missing separator
         self::assertNull(SwedenNationalIdentificationNumber::parse('123456-7890'));
 
         self::assertNull(SwedenNationalIdentificationNumber::parse('190228-4048')); // valid date, incorrect checksum
