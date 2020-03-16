@@ -1,25 +1,28 @@
 {
-    "name": "vladdesv/php-nin",
-    "description": "National Identification Number",
-    "type": "library",
-    "license": "MIT",
-    "authors": [
-        {
-            "name": "Vladimirs Nordholm",
-            "email": "v@vladde.net"
-        }
-    ],
-    "autoload": {
-        "psr-4": {
-            "NationalIdentificationNumber\\": "src"
-        }
-    },
-    "autoload-dev": {
-        "psr-4": {
-            "NationalIdentificationNumber\\Tests\\": "tests"
-        }
-    },
-    "require-dev": {
-        "phpunit/phpunit": "^9.0"
+  "name": "vladdesv/php-nin",
+  "description": "National Identification Number",
+  "type": "library",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Vladimirs Nordholm",
+      "email": "v@vladde.net"
     }
+  ],
+  "require": {
+    "php": "^7.2"
+  },
+  "autoload": {
+    "psr-4": {
+      "NationalIdentificationNumber\\": "src"
+    }
+  },
+  "require-dev": {
+    "phpunit/phpunit": "^9.0"
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "NationalIdentificationNumber\\Tests\\": "tests"
+    }
+  }
 }

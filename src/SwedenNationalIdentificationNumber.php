@@ -11,7 +11,7 @@ class SwedenNationalIdentificationNumber implements NationalIdentificationNumber
     private const REGEX_PERSONAL_IDENTITY_NUMBER = /** @lang PhpRegExp */
         '/^(\d{6})([-+])(\d{3})(\d)$/';
 
-    public static function parse(string $nationalIdentificationNumber): ?self
+    public static function parse(string $nationalIdentificationNumber): ?NationalIdentificationNumberInterface
     {
         $matches = [];
         if (!preg_match(self::REGEX_PERSONAL_IDENTITY_NUMBER, $nationalIdentificationNumber, $matches)) {
@@ -67,7 +67,9 @@ class SwedenNationalIdentificationNumber implements NationalIdentificationNumber
     {
         $nin = sprintf('%02d%02d%02d%d', ((int)$dateTime->format('Y')) % 100, (int)$dateTime->format('m'), (int)$dateTime->format('d'), $individualNumber);
 
-        $numbers = self::applyLuhnAlgorithm(array_map(fn($number) => (int)$number, str_split($nin)));
+        $numbers = self::applyLuhnAlgorithm(array_map(function ($number) {
+            return (int)$number;
+        }, str_split($nin)));
         return $checksum === self::calculateValueChecksum(array_sum($numbers));
     }
 
@@ -84,7 +86,9 @@ class SwedenNationalIdentificationNumber implements NationalIdentificationNumber
             $modifiedNumbers .= ($number * $multiplier);
         }
 
-        return array_map(fn($number) => (int)$number, str_split($modifiedNumbers));
+        return array_map(function ($number) {
+            return (int)$number;
+        }, str_split($modifiedNumbers));
     }
 
     private static function calculateValueChecksum(int $number): int
@@ -100,7 +104,18 @@ class SwedenNationalIdentificationNumber implements NationalIdentificationNumber
         $this->checksum = $checksum;
     }
 
-    private DateTimeImmutable $dateTime;
-    private int $individualNumber;
-    private int $checksum;
+    /**
+     * @var DateTimeImmutable
+     */
+    private $dateTime;
+
+    /**
+     * @var int
+     */
+    private $individualNumber;
+
+    /**
+     * @var int
+     */
+    private $checksum;
 }
