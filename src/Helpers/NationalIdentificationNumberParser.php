@@ -2,12 +2,12 @@
 
 declare(strict_types=1);
 
-namespace NationalIdentificationNumber\Helpers;
+namespace NIN\Helpers;
 
 use Exception;
 use InvalidArgumentException;
-use NationalIdentificationNumber\NationalIdentificationNumbers\NationalIdentificationNumberInterface;
-use NationalIdentificationNumber\NationalIdentificationNumbers\SwedenNationalIdentificationNumber;
+use NIN\NationalIdentificationNumbers\NationalIdentificationNumberInterface;
+use NIN\NationalIdentificationNumbers\SwedenNationalIdentificationNumber;
 
 final class NationalIdentificationNumberParser
 {

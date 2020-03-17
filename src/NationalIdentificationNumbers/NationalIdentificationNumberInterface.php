@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace NationalIdentificationNumber\NationalIdentificationNumbers;
+namespace NIN\NationalIdentificationNumbers;
 
 interface NationalIdentificationNumberInterface
 {

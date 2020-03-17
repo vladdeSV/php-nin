@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace NationalIdentificationNumber\Tests\NationalIdentificationNumbers;
+namespace NIN\Tests\NationalIdentificationNumbers;
 
 use InvalidArgumentException;
-use NationalIdentificationNumber\NationalIdentificationNumbers\SwedenNationalIdentificationNumber;
+use NIN\NationalIdentificationNumbers\SwedenNationalIdentificationNumber;
 use PHPUnit\Framework\TestCase;
 
 class SwedenNationalIdentificationNumberTest extends TestCase
