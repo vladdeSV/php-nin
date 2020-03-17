@@ -52,6 +52,14 @@ class NationalIdentificationNumberParserTest extends TestCase
         self::assertNull(NationalIdentificationNumberParser::detectCountry('abc123'));
     }
 
+    public function testTryParse()
+    {
+        self::assertNull(NationalIdentificationNumberParser::tryParse('', 'se'));
+        self::assertNull(NationalIdentificationNumberParser::tryParse('foobar', ''));
+
+        self::assertNotNull(NationalIdentificationNumberParser::tryParse('990214+0095', 'se'));
+    }
+
     public function nationalIdentityNumberCountry(): array
     {
         return [

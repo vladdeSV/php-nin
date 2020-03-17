@@ -20,6 +20,15 @@ final class NationalIdentificationNumberParser
         return (self::AVAILABLE_COUNTRY_CODES[$countryCode])::parse($nationalIdentificationNumber);
     }
 
+    public static function tryParse(string $nationalIdentificationNumber, string $countryCode): ?NationalIdentificationNumberInterface
+    {
+        try {
+            return self::parse($nationalIdentificationNumber, $countryCode);
+        } catch (Exception $exception) {
+            return null;
+        }
+    }
+
     public static function detectCountry(string $nationalIdentificationNumber): ?string
     {
         /** @var string $countryCode */
