@@ -5,18 +5,18 @@ declare(strict_types=1);
 namespace NationalIdentificationNumber;
 
 use DateTimeImmutable;
+use InvalidArgumentException;
 
 class SwedenNationalIdentificationNumber implements NationalIdentificationNumberInterface
 {
     private const REGEX_PERSONAL_IDENTITY_NUMBER = /** @lang PhpRegExp */
         '/^(\d{6})([-+])(\d{3})(\d)$/';
 
-    public static function parse(string $nationalIdentificationNumber): ?NationalIdentificationNumberInterface
+    public static function parse(string $nationalIdentificationNumber): NationalIdentificationNumberInterface
     {
         $matches = [];
         if (!preg_match(self::REGEX_PERSONAL_IDENTITY_NUMBER, $nationalIdentificationNumber, $matches)) {
-            //throw new \Exception('Invalid format. Must follow YYMMDD±XXXX');
-            return null;
+            throw new InvalidArgumentException('Invalid format. Must follow YYMMDD±XXXX');
         }
 
         $separator = $matches[2];
@@ -30,12 +30,11 @@ class SwedenNationalIdentificationNumber implements NationalIdentificationNumber
 
         $date = self::calculateDate($year, $month, $day, $separator);
         if ($date === null) {
-            //throw new Exception("Invalid date. {$year}-{$month}-{$day} does not exist.");
-            return null;
+            throw new InvalidArgumentException("Invalid date. {$year}-{$month}-{$day} does not exist.");
         }
 
         if (!self::isValidPersonalIdentityNumber($date, $individualNumber, $checksum)) {
-            return null;
+            throw new InvalidArgumentException("Invalid personal identity number.");
         }
 
         return new self($date, $individualNumber, $checksum);

@@ -6,7 +6,7 @@ namespace NationalIdentificationNumber;
 
 interface NationalIdentificationNumberInterface
 {
-    public static function parse(string $nationalIdentificationNumber): ?NationalIdentificationNumberInterface;
+    public static function parse(string $nationalIdentificationNumber): NationalIdentificationNumberInterface;
 
     public function __toString();
 }

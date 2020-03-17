@@ -4,41 +4,65 @@ declare(strict_types=1);
 
 namespace NationalIdentificationNumber\Tests;
 
+use InvalidArgumentException;
 use PHPUnit\Framework\TestCase;
 use NationalIdentificationNumber\SwedenNationalIdentificationNumber;
 
 class SwedenNationalIdentificationNumberTest extends TestCase
 {
-    public function testValid()
+    /**
+     * @dataProvider validPersonalIdentityNumbers
+     * @param string $validPersonalIdentityNumber
+     */
+    public function testValid(string $validPersonalIdentityNumber)
     {
-        self::assertNotNull(SwedenNationalIdentificationNumber::parse('190228-2258'));
-        self::assertNotNull(SwedenNationalIdentificationNumber::parse('730512-4609'));
-        self::assertNotNull(SwedenNationalIdentificationNumber::parse('180910+4068'));
-        self::assertNotNull(SwedenNationalIdentificationNumber::parse('690628-3384'));
+        self::assertNotNull(SwedenNationalIdentificationNumber::parse($validPersonalIdentityNumber));
     }
 
-    public function testInvalid()
+    /**
+     * @dataProvider invalidPersonalIdentityNumbers
+     * @param string $invalidPersonalIdentityNumber
+     */
+    public function testInvalid(string $invalidPersonalIdentityNumber)
     {
-        self::assertNull(SwedenNationalIdentificationNumber::parse('abc'));
-        self::assertNull(SwedenNationalIdentificationNumber::parse('1902282258')); // missing separator
-        self::assertNull(SwedenNationalIdentificationNumber::parse('123456-7890'));
+        self::expectException(InvalidArgumentException::class);
 
-        self::assertNull(SwedenNationalIdentificationNumber::parse('190228-4048')); // valid date, incorrect checksum
-        self::assertNull(SwedenNationalIdentificationNumber::parse('190229-4048')); // correct checksum, invalid date
+        SwedenNationalIdentificationNumber::parse($invalidPersonalIdentityNumber);
     }
 
-    public function testToString()
+    /**
+     * @dataProvider validPersonalIdentityNumbers
+     * @param string $validPersonalIdentityNumber
+     */
+    public function testToString(string $validPersonalIdentityNumber)
     {
-        $snin = SwedenNationalIdentificationNumber::parse('190228-2258');
-        self::assertSame('190228-2258', $snin->__toString());
+        self::assertSame(
+            $validPersonalIdentityNumber,
+            SwedenNationalIdentificationNumber::parse($validPersonalIdentityNumber)->__toString()
+        );
+    }
 
-        $snin = SwedenNationalIdentificationNumber::parse('190228+2258');
-        self::assertSame('190228+2258', $snin->__toString());
+    public function validPersonalIdentityNumbers(): array
+    {
+        return [
+            ['190228-2258'],
+            ['190228+2258'],
+            ['730512-4609'],
+            ['180910+4068'],
+            ['690628-3384'],
+            ['200314+4355'],
+            ['200314-4355'],
+        ];
+    }
 
-        $snin = SwedenNationalIdentificationNumber::parse('200314+4355');
-        self::assertSame('200314+4355', $snin->__toString());
-
-        $snin = SwedenNationalIdentificationNumber::parse('200314-4355');
-        self::assertSame('200314-4355', $snin->__toString());
+    public function invalidPersonalIdentityNumbers(): array
+    {
+        return [
+            ['abc'],
+            ['1902282258'], // missing separator
+            ['123456-7890'],
+            ['190228-4048'], // valid date, incorrect checksum
+            ['190229-4048'], // correct checksum, invalid date
+        ];
     }
 }
