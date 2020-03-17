@@ -40,5 +40,5 @@ echo $snin->getCountryCode(); // 'se'
 composer require vladdesv/php-nin
 ```
 
-## Licence
+## License
 MIT
