@@ -11,7 +11,7 @@ use NIN\NationalIdentificationNumbers\SwedenNationalIdentificationNumber;
 
 final class NationalIdentificationNumberParser
 {
-    public static function parse(string $nationalIdentificationNumber, string $countryCode)
+    public static function parse(string $nationalIdentificationNumber, string $countryCode): NationalIdentificationNumberInterface
     {
         if (!isset(self::AVAILABLE_COUNTRY_CODES[$countryCode])) {
             throw new Exception("'$countryCode' is not supported.");
@@ -26,8 +26,7 @@ final class NationalIdentificationNumberParser
         /** @var NationalIdentificationNumberInterface $class */
         foreach (self::AVAILABLE_COUNTRY_CODES as $countryCode => $class) {
             try {
-                $class::parse($nationalIdentificationNumber);
-                return $countryCode;
+                $class::parse($nationalIdentificationNumber)->getCountryCode();
             } catch (InvalidArgumentException $exception) {
                 continue;
             }
