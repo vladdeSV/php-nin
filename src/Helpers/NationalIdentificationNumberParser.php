@@ -26,7 +26,7 @@ final class NationalIdentificationNumberParser
         /** @var NationalIdentificationNumberInterface $class */
         foreach (self::AVAILABLE_COUNTRY_CODES as $countryCode => $class) {
             try {
-                $class::parse($nationalIdentificationNumber)->getCountryCode();
+                return $class::parse($nationalIdentificationNumber)->getCountryCode();
             } catch (InvalidArgumentException $exception) {
                 continue;
             }
