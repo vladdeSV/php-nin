@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace NationalIdentificationNumber\Tests;
+namespace NationalIdentificationNumber\Tests\NationalIdentificationNumbers;
 
 use InvalidArgumentException;
+use NationalIdentificationNumber\NationalIdentificationNumbers\SwedenNationalIdentificationNumber;
 use PHPUnit\Framework\TestCase;
-use NationalIdentificationNumber\SwedenNationalIdentificationNumber;
 
 class SwedenNationalIdentificationNumberTest extends TestCase
 {
@@ -40,6 +40,14 @@ class SwedenNationalIdentificationNumberTest extends TestCase
             $validPersonalIdentityNumber,
             SwedenNationalIdentificationNumber::parse($validPersonalIdentityNumber)->__toString()
         );
+    }
+
+    public function testCountryCode()
+    {
+        $snin = SwedenNationalIdentificationNumber::parse('770523-7100');
+        self::assertNotNull($snin);
+
+        self::assertSame('se', $snin->getCountryCode());
     }
 
     public function validPersonalIdentityNumbers(): array

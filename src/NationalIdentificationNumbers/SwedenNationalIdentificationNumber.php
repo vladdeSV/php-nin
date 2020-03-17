@@ -2,16 +2,13 @@
 
 declare(strict_types=1);
 
-namespace NationalIdentificationNumber;
+namespace NationalIdentificationNumber\NationalIdentificationNumbers;
 
 use DateTimeImmutable;
 use InvalidArgumentException;
 
 class SwedenNationalIdentificationNumber implements NationalIdentificationNumberInterface
 {
-    private const REGEX_PERSONAL_IDENTITY_NUMBER = /** @lang PhpRegExp */
-        '/^(\d{6})([-+])(\d{3})(\d)$/';
-
     public static function parse(string $nationalIdentificationNumber): NationalIdentificationNumberInterface
     {
         $matches = [];
@@ -38,6 +35,11 @@ class SwedenNationalIdentificationNumber implements NationalIdentificationNumber
         }
 
         return new self($date, $individualNumber, $checksum);
+    }
+
+    public function getCountryCode(): string
+    {
+        return 'se';
     }
 
     public function __toString()
@@ -117,4 +119,7 @@ class SwedenNationalIdentificationNumber implements NationalIdentificationNumber
      * @var int
      */
     private $checksum;
+
+    private const REGEX_PERSONAL_IDENTITY_NUMBER = /** @lang PhpRegExp */
+        '/^(\d{6})([-+])(\d{3})(\d)$/';
 }
