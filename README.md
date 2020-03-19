@@ -10,7 +10,7 @@ This library validates National Identification Numbers (NINs).
 ## Usage
 
 ```php
-use NIN\Helpers\NationalIdentificationNumberParser;
+use NIN\NationalIdentificationNumberParser;
 
 $nin = NationalIdentificationNumberParser::tryParse('890629-1870', 'se');
 

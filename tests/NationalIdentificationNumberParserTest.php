@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace NIN\Tests\Helpers;
+namespace NIN\Tests;
 
 use Exception;
 use InvalidArgumentException;
-use NIN\Helpers\NationalIdentificationNumberParser;
+use NIN\NationalIdentificationNumberParser;
 use PHPUnit\Framework\TestCase;
 
 class NationalIdentificationNumberParserTest extends TestCase

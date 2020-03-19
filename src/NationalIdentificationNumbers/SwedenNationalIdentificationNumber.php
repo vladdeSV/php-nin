@@ -42,7 +42,7 @@ class SwedenNationalIdentificationNumber implements NationalIdentificationNumber
         return 'se';
     }
 
-    public function __toString()
+    public function __toString(): string
     {
         $separator = $this->dateTime->diff(new DateTimeImmutable())->y >= 100 ? '+' : '-';
         return sprintf('%02d%02d%02d%s%d%d', ((int)$this->dateTime->format('Y')) % 100, (int)$this->dateTime->format('m'), (int)$this->dateTime->format('d'), $separator, $this->individualNumber, $this->checksum);

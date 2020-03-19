@@ -10,5 +10,5 @@ interface NationalIdentificationNumberInterface
 
     public function getCountryCode(): string;
 
-    public function __toString();
+    public function __toString(): string;
 }
