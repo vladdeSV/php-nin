@@ -5,6 +5,7 @@ This library validates National Identification Numbers (NINs).
 
 ## Supported countries
 * Sweden
+* Norway
 
 
 ## Usage
