@@ -85,7 +85,7 @@ class NorwegianNationalIdentificationNumber implements NationalIdentificationNum
          * 500–749 indiviual number means between 1854–1899 (54-99)
          * 900–999 indiviual number means between 1940–1999 (40-99)
          * 000-499 indiviual number means between 1900–1999 (00-99)
-         * 500–999 indiviual number means between 2000–2039 (00-49)
+         * 500–999 indiviual number means between 2000–2039 (00-39)
          */
 
         $twoDigitYearNumber = (int)$twoDigitYear;
