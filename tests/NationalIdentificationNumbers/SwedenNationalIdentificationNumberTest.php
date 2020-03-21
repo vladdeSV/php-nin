@@ -12,40 +12,43 @@ class SwedenNationalIdentificationNumberTest extends TestCase
 {
     /**
      * @dataProvider validPersonalIdentityNumbers
-     * @param string $validPersonalIdentityNumber
+     * @param string $personalIdentityNumber
      */
-    public function testValid(string $validPersonalIdentityNumber)
+    public function testValid(string $personalIdentityNumber)
     {
-        self::assertNotNull(SwedenNationalIdentificationNumber::parse($validPersonalIdentityNumber));
+        self::assertNotNull(SwedenNationalIdentificationNumber::parse($personalIdentityNumber));
     }
 
     /**
      * @dataProvider invalidPersonalIdentityNumbers
-     * @param string $invalidPersonalIdentityNumber
+     * @param string $personalIdentityNumber
      */
-    public function testInvalid(string $invalidPersonalIdentityNumber)
+    public function testInvalid(string $personalIdentityNumber)
     {
         self::expectException(InvalidArgumentException::class);
 
-        SwedenNationalIdentificationNumber::parse($invalidPersonalIdentityNumber);
+        SwedenNationalIdentificationNumber::parse($personalIdentityNumber);
     }
 
     /**
      * @dataProvider validPersonalIdentityNumbers
-     * @param string $validPersonalIdentityNumber
+     * @param string $personalIdentityNumber
      */
-    public function testToString(string $validPersonalIdentityNumber)
+    public function testToString(string $personalIdentityNumber)
     {
         self::assertSame(
-            $validPersonalIdentityNumber,
-            SwedenNationalIdentificationNumber::parse($validPersonalIdentityNumber)->__toString()
+            $personalIdentityNumber,
+            SwedenNationalIdentificationNumber::parse($personalIdentityNumber)->__toString()
         );
     }
 
-    public function testCountryCode()
+    /**
+     * @dataProvider validPersonalIdentityNumbers
+     * @param string $personalIdentityNumber
+     */
+    public function testCountryCode(string $personalIdentityNumber)
     {
         $snin = SwedenNationalIdentificationNumber::parse('770523-7100');
-        self::assertNotNull($snin);
 
         self::assertSame('se', $snin->getCountryCode());
     }
