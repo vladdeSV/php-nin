@@ -29,21 +29,6 @@ final class NationalIdentificationNumberParser
         }
     }
 
-    public static function detectCountry(string $nationalIdentificationNumber): ?string
-    {
-        /** @var string $countryCode */
-        /** @var NationalIdentificationNumberInterface $class */
-        foreach (self::AVAILABLE_COUNTRY_CODES as $countryCode => $class) {
-            try {
-                return $class::parse($nationalIdentificationNumber)->getCountryCode();
-            } catch (InvalidArgumentException $exception) {
-                continue;
-            }
-        }
-
-        return null;
-    }
-
     private const AVAILABLE_COUNTRY_CODES = [
         'se' => SwedenNationalIdentificationNumber::class
     ];

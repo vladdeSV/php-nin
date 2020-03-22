@@ -23,16 +23,6 @@ class NationalIdentificationNumberParserTest extends TestCase
         self::assertNotNull(NationalIdentificationNumberParser::parse($nin, $countryCode));
     }
 
-    /**
-     * @dataProvider nationalIdentityNumberCountry
-     * @param string $nin
-     * @param string $countryCode
-     */
-    public function testDetectCountry(string $nin, string $countryCode)
-    {
-        self::assertSame($countryCode, NationalIdentificationNumberParser::detectCountry($nin));
-    }
-
     public function testParseInvalidNationalIdentificationNumber()
     {
         self::expectException(InvalidArgumentException::class);
@@ -45,11 +35,6 @@ class NationalIdentificationNumberParserTest extends TestCase
         self::expectException(Exception::class);
 
         NationalIdentificationNumberParser::parse('', 'xx');
-    }
-
-    public function testDetectInvalidCountry()
-    {
-        self::assertNull(NationalIdentificationNumberParser::detectCountry('abc123'));
     }
 
     public function testTryParse()

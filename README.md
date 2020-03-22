@@ -19,22 +19,6 @@ echo $nin;                   // '890629-1870'
 echo $nin->getCountryCode(); // 'se'
 ```
 
-
-```php
-$countryCode = NationalIdentificationNumberParser::detectCountry('890629-1870'); // valid swedish personal identity number
-
-echo $countryCode; // 'se'
-```
-
-```php
-use NIN\NationalIdentificationNumbers\SwedenNationalIdentificationNumber;
-
-$snin = SwedenNationalIdentificationNumber::parse('951124-3611');
-
-echo $snin;                   // '951124-3611'
-echo $snin->getCountryCode(); // 'se'
-```
-
 ## Installation
 
 ```
