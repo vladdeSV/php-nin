@@ -22,7 +22,12 @@ use InvalidArgumentException;
  */
 class NorwegianNationalIdentificationNumber implements NationalIdentificationNumberInterface
 {
-    public static function parse(string $nationalIdentificationNumber): NationalIdentificationNumberInterface
+    public const COUNTRY_CODE = 'no';
+
+    private const REGEX_BIRTH_NUMBER = /** @lang PhpRegExp */
+        '/^(\d{6})(\d{3})(\d{2})$/';
+
+    public function __construct(string $nationalIdentificationNumber)
     {
         $matches = [];
         if (!preg_match(self::REGEX_BIRTH_NUMBER, $nationalIdentificationNumber, $matches)) {
@@ -41,7 +46,7 @@ class NorwegianNationalIdentificationNumber implements NationalIdentificationNum
             $day -= 40;
         }
 
-        $year = self::getYearFromIndividualNumberAndTwoDigitYear($individualNumber, $twoDigitYear);
+        $year = $this->getYearFromIndividualNumberAndTwoDigitYear($individualNumber, $twoDigitYear);
 
         if (!checkdate((int)$month, (int)$day, (int)$year)) {
             throw new InvalidArgumentException("Invalid date. {$year}-{$month}-{$day} does not exist.");
@@ -53,17 +58,17 @@ class NorwegianNationalIdentificationNumber implements NationalIdentificationNum
             return (int)$char;
         }, str_split($matches[0]));
 
-        $validChecksum = self::validateChecksum($numbers);
+        $validChecksum = $this->validateChecksum($numbers);
         if (!$validChecksum) {
             throw new InvalidArgumentException("Invalid checksum.");
         }
 
-        return new self($date, $isDNumber, $individualNumber, $checksum);
+        $this->dateTime = $date;
+        $this->isDNumber = $isDNumber;
+        $this->individualNumber = $individualNumber;
+        $this->checksum = $checksum;
     }
 
-    /**
-     * @inheritDoc
-     */
     public function __toString(): string
     {
         $day = (int)$this->dateTime->format('d');
@@ -76,10 +81,19 @@ class NorwegianNationalIdentificationNumber implements NationalIdentificationNum
 
     public function getCountryCode(): string
     {
-        return 'no';
+        return self::COUNTRY_CODE;
     }
 
-    private static function getYearFromIndividualNumberAndTwoDigitYear(string $individualNumber, string $twoDigitYear)
+    public function validateChecksumWithBirthNumberAndMultipliers(array $birthNumber, array $multipliers): bool
+    {
+        $sum = array_sum(array_map(function ($multiplier, $index) use ($birthNumber) {
+            return $multiplier * $birthNumber[$index];
+        }, $multipliers, array_keys($multipliers)));
+
+        return $sum % 11 === 0;
+    }
+
+    private function getYearFromIndividualNumberAndTwoDigitYear(string $individualNumber, string $twoDigitYear)
     {
         /*
          * 500–749 indiviual number means between 1854–1899 (54-99)
@@ -91,20 +105,20 @@ class NorwegianNationalIdentificationNumber implements NationalIdentificationNum
         $twoDigitYearNumber = (int)$twoDigitYear;
         $individualNumberNumber = (int)$individualNumber;
 
-        if (self::isNumberInRange($individualNumberNumber, 500, 749) && self::isNumberInRange($twoDigitYearNumber, 54, 99)) {
+        if ($this->isNumberInRange($individualNumberNumber, 500, 749) && $this->isNumberInRange($twoDigitYearNumber, 54, 99)) {
             return (int)("18{$twoDigitYear}");
         }
 
         // special case for people born between 1940 -> 1999, span also includes 900-999
-        if (self::isNumberInRange($individualNumberNumber, 499, 999) && self::isNumberInRange($twoDigitYearNumber, 40, 99)) {
+        if ($this->isNumberInRange($individualNumberNumber, 499, 999) && $this->isNumberInRange($twoDigitYearNumber, 40, 99)) {
             return (int)("19{$twoDigitYear}");
         }
 
-        if (self::isNumberInRange($individualNumberNumber, 0, 499) && self::isNumberInRange($twoDigitYearNumber, 00, 99)) {
+        if ($this->isNumberInRange($individualNumberNumber, 0, 499) && $this->isNumberInRange($twoDigitYearNumber, 00, 99)) {
             return (int)("19{$twoDigitYear}");
         }
 
-        if (self::isNumberInRange($individualNumberNumber, 500, 999) && self::isNumberInRange($twoDigitYearNumber, 00, 39)) {
+        if ($this->isNumberInRange($individualNumberNumber, 500, 999) && $this->isNumberInRange($twoDigitYearNumber, 00, 39)) {
             return (int)("20{$twoDigitYear}");
         }
 
@@ -112,37 +126,17 @@ class NorwegianNationalIdentificationNumber implements NationalIdentificationNum
 
     }
 
-    private static function isNumberInRange(int $number, int $a, int $b): bool
+    private function isNumberInRange(int $number, int $a, int $b): bool
     {
         return $number >= $a && $number <= $b;
     }
 
-    private static function validateChecksum(array $nnin)
+    private function validateChecksum(array $nnin)
     {
         return
-            self::validateChecksumWithBirthNumberAndMultipliers($nnin, [3, 7, 6, 1, 8, 9, 4, 5, 2, 1]) &&
-            self::validateChecksumWithBirthNumberAndMultipliers($nnin, [5, 4, 3, 2, 7, 6, 5, 4, 3, 2, 1]);
+            $this->validateChecksumWithBirthNumberAndMultipliers($nnin, [3, 7, 6, 1, 8, 9, 4, 5, 2, 1]) &&
+            $this->validateChecksumWithBirthNumberAndMultipliers($nnin, [5, 4, 3, 2, 7, 6, 5, 4, 3, 2, 1]);
     }
-
-    public static function validateChecksumWithBirthNumberAndMultipliers(array $birthNumber, array $multipliers): bool
-    {
-        $sum = array_sum(array_map(function ($multiplier, $index) use ($birthNumber) {
-            return $multiplier * $birthNumber[$index];
-        }, $multipliers, array_keys($multipliers)));
-
-        return $sum % 11 === 0;
-    }
-
-    private function __construct(DateTimeImmutable $dateTime, bool $isDNumber, string $individualNumber, string $checksum)
-    {
-        $this->dateTime = $dateTime;
-        $this->isDNumber = $isDNumber;
-        $this->individualNumber = $individualNumber;
-        $this->checksum = $checksum;
-    }
-
-    private const REGEX_BIRTH_NUMBER = /** @lang PhpRegExp */
-        '/^(\d{6})(\d{3})(\d{2})$/';
 
     /**
      * @var DateTimeImmutable

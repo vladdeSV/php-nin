@@ -16,7 +16,7 @@ class SwedenNationalIdentificationNumberTest extends TestCase
      */
     public function testValid(string $personalIdentityNumber)
     {
-        self::assertNotNull(SwedenNationalIdentificationNumber::parse($personalIdentityNumber));
+        self::assertNotNull(new SwedenNationalIdentificationNumber($personalIdentityNumber));
     }
 
     /**
@@ -27,7 +27,7 @@ class SwedenNationalIdentificationNumberTest extends TestCase
     {
         self::expectException(InvalidArgumentException::class);
 
-        SwedenNationalIdentificationNumber::parse($personalIdentityNumber);
+        new SwedenNationalIdentificationNumber($personalIdentityNumber);
     }
 
     /**
@@ -38,7 +38,7 @@ class SwedenNationalIdentificationNumberTest extends TestCase
     {
         self::assertSame(
             $personalIdentityNumber,
-            SwedenNationalIdentificationNumber::parse($personalIdentityNumber)->__toString()
+            (new SwedenNationalIdentificationNumber($personalIdentityNumber))->__toString()
         );
     }
 
@@ -48,7 +48,7 @@ class SwedenNationalIdentificationNumberTest extends TestCase
      */
     public function testCountryCode(string $personalIdentityNumber)
     {
-        $snin = SwedenNationalIdentificationNumber::parse('770523-7100');
+        $snin = new SwedenNationalIdentificationNumber($personalIdentityNumber);
 
         self::assertSame('se', $snin->getCountryCode());
     }
@@ -69,6 +69,7 @@ class SwedenNationalIdentificationNumberTest extends TestCase
     public function invalidPersonalIdentityNumbers(): array
     {
         return [
+            [''],
             ['abc'],
             ['1902282258'], // missing separator
             ['123456-7890'],

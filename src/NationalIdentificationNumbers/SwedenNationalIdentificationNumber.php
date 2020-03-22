@@ -9,7 +9,12 @@ use InvalidArgumentException;
 
 class SwedenNationalIdentificationNumber implements NationalIdentificationNumberInterface
 {
-    public static function parse(string $nationalIdentificationNumber): NationalIdentificationNumberInterface
+    public const COUNTRY_CODE = 'se';
+
+    private const REGEX_PERSONAL_IDENTITY_NUMBER = /** @lang PhpRegExp */
+        '/^(\d{6})([-+])(\d{3})(\d)$/';
+
+    public function __construct(string $nationalIdentificationNumber)
     {
         $matches = [];
         if (!preg_match(self::REGEX_PERSONAL_IDENTITY_NUMBER, $nationalIdentificationNumber, $matches)) {
@@ -25,30 +30,32 @@ class SwedenNationalIdentificationNumber implements NationalIdentificationNumber
         $month = (int)$month;
         $day = (int)$day;
 
-        $date = self::calculateDate($year, $month, $day, $separator);
+        $date = $this->calculateDate($year, $month, $day, $separator);
         if ($date === null) {
             throw new InvalidArgumentException("Invalid date. {$year}-{$month}-{$day} does not exist.");
         }
 
-        if (!self::isValidPersonalIdentityNumber($date, $individualNumber, $checksum)) {
+        if (!$this->isValidPersonalIdentityNumber($date, $individualNumber, $checksum)) {
             throw new InvalidArgumentException("Invalid personal identity number.");
         }
 
-        return new self($date, $individualNumber, $checksum);
+        $this->dateTime = $date;
+        $this->individualNumber = $individualNumber;
+        $this->checksum = $checksum;
     }
 
     public function getCountryCode(): string
     {
-        return 'se';
+        return self::COUNTRY_CODE;
     }
 
     public function __toString(): string
     {
         $separator = $this->dateTime->diff(new DateTimeImmutable())->y >= 100 ? '+' : '-';
-        return sprintf('%02d%02d%02d%s%d%d', ((int)$this->dateTime->format('Y')) % 100, (int)$this->dateTime->format('m'), (int)$this->dateTime->format('d'), $separator, $this->individualNumber, $this->checksum);
+        return sprintf('%02d%02d%02d%s%03d%d', ((int)$this->dateTime->format('Y')) % 100, (int)$this->dateTime->format('m'), (int)$this->dateTime->format('d'), $separator, $this->individualNumber, $this->checksum);
     }
 
-    private static function calculateDate(int $twoDigitYear, int $month, int $day, string $separator): ?DateTimeImmutable
+    private function calculateDate(int $twoDigitYear, int $month, int $day, string $separator): ?DateTimeImmutable
     {
         $currentYear = (int)(new DateTimeImmutable())->format('Y');
         $year = ((int)(($currentYear - $twoDigitYear) / 100)) * 100 + $twoDigitYear;
@@ -64,9 +71,9 @@ class SwedenNationalIdentificationNumber implements NationalIdentificationNumber
         return DateTimeImmutable::createFromFormat('Y-m-d', $str);
     }
 
-    private static function isValidPersonalIdentityNumber(DateTimeImmutable $dateTime, int $individualNumber, int $checksum): bool
+    private function isValidPersonalIdentityNumber(DateTimeImmutable $dateTime, int $individualNumber, int $checksum): bool
     {
-        $nin = sprintf('%02d%02d%02d%d', ((int)$dateTime->format('Y')) % 100, (int)$dateTime->format('m'), (int)$dateTime->format('d'), $individualNumber);
+        $nin = sprintf('%02d%02d%02d%03d', ((int)$dateTime->format('Y')) % 100, (int)$dateTime->format('m'), (int)$dateTime->format('d'), $individualNumber);
 
         $numbers = self::applyLuhnAlgorithm(array_map(function ($number) {
             return (int)$number;
@@ -78,7 +85,7 @@ class SwedenNationalIdentificationNumber implements NationalIdentificationNumber
      * @param int[] $numbers
      * @return int[]
      */
-    private static function applyLuhnAlgorithm(array $numbers): array
+    private function applyLuhnAlgorithm(array $numbers): array
     {
         $modifiedNumbers = '';
         foreach ($numbers as $index => $number) {
@@ -92,34 +99,21 @@ class SwedenNationalIdentificationNumber implements NationalIdentificationNumber
         }, str_split($modifiedNumbers));
     }
 
-    private static function calculateValueChecksum(int $number): int
+    private function calculateValueChecksum(int $number): int
     {
         // source: https://sv.wikipedia.org/wiki/Personnummer_i_Sverige#Kontrollsiffran
         return (10 - ($number % 10)) % 10;
     }
-
-    private function __construct(DateTimeImmutable $dateTime, int $individualNumber, int $checksum)
-    {
-        $this->dateTime = $dateTime;
-        $this->individualNumber = $individualNumber;
-        $this->checksum = $checksum;
-    }
-
     /**
      * @var DateTimeImmutable
      */
     private $dateTime;
-
     /**
      * @var int
      */
     private $individualNumber;
-
     /**
      * @var int
      */
     private $checksum;
-
-    private const REGEX_PERSONAL_IDENTITY_NUMBER = /** @lang PhpRegExp */
-        '/^(\d{6})([-+])(\d{3})(\d)$/';
 }

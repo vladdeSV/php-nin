@@ -6,7 +6,7 @@ namespace NIN\NationalIdentificationNumbers;
 
 interface NationalIdentificationNumberInterface
 {
-    public static function parse(string $nationalIdentificationNumber): NationalIdentificationNumberInterface;
+    public function __construct(string $nationalIdentificationNumber);
 
     public function getCountryCode(): string;
 

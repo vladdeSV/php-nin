@@ -11,7 +11,6 @@ use PHPUnit\Framework\TestCase;
 
 class NationalIdentificationNumberParserTest extends TestCase
 {
-
     /**
      * @dataProvider nationalIdentityNumberCountry
      * @param string $nin
@@ -20,7 +19,10 @@ class NationalIdentificationNumberParserTest extends TestCase
      */
     public function testParseValid(string $nin, string $countryCode)
     {
-        self::assertNotNull(NationalIdentificationNumberParser::parse($nin, $countryCode));
+        $nationalIdentificationNumber = NationalIdentificationNumberParser::parse($nin, $countryCode);
+        self::assertNotNull($nationalIdentificationNumber);
+        self::assertSame($nin, $nationalIdentificationNumber->__toString());
+        self::assertSame($countryCode, $nationalIdentificationNumber->getCountryCode());
     }
 
     public function testParseInvalidNationalIdentificationNumber()
@@ -49,6 +51,7 @@ class NationalIdentificationNumberParserTest extends TestCase
     {
         return [
             ['790315-0667', 'se'],
+            ['15121015649', 'no'],
         ];
     }
 }

@@ -5,8 +5,8 @@ declare(strict_types=1);
 namespace NIN;
 
 use Exception;
-use InvalidArgumentException;
 use NIN\NationalIdentificationNumbers\NationalIdentificationNumberInterface;
+use NIN\NationalIdentificationNumbers\NorwegianNationalIdentificationNumber;
 use NIN\NationalIdentificationNumbers\SwedenNationalIdentificationNumber;
 
 final class NationalIdentificationNumberParser
@@ -17,7 +17,8 @@ final class NationalIdentificationNumberParser
             throw new Exception("'$countryCode' is not supported.");
         }
 
-        return (self::AVAILABLE_COUNTRY_CODES[$countryCode])::parse($nationalIdentificationNumber);
+        $nin = self::AVAILABLE_COUNTRY_CODES[$countryCode];
+        return new $nin($nationalIdentificationNumber);
     }
 
     public static function tryParse(string $nationalIdentificationNumber, string $countryCode): ?NationalIdentificationNumberInterface
@@ -30,6 +31,7 @@ final class NationalIdentificationNumberParser
     }
 
     private const AVAILABLE_COUNTRY_CODES = [
-        'se' => SwedenNationalIdentificationNumber::class
+        SwedenNationalIdentificationNumber::COUNTRY_CODE => SwedenNationalIdentificationNumber::class,
+        NorwegianNationalIdentificationNumber::COUNTRY_CODE => NorwegianNationalIdentificationNumber::class,
     ];
 }

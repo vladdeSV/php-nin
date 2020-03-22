@@ -22,7 +22,7 @@ class NorwegianNationalIdentificationNumberTest extends TestCase
      */
     public function testParseValid(string $birthNumber)
     {
-        self::assertNotNull(NorwegianNationalIdentificationNumber::parse($birthNumber));
+        self::assertNotNull(new NorwegianNationalIdentificationNumber($birthNumber));
     }
 
     /**
@@ -34,7 +34,7 @@ class NorwegianNationalIdentificationNumberTest extends TestCase
     {
         $this->expectException(InvalidArgumentException::class);
 
-        NorwegianNationalIdentificationNumber::parse($birthNumber);
+        new NorwegianNationalIdentificationNumber($birthNumber);
     }
 
     /**
@@ -44,7 +44,7 @@ class NorwegianNationalIdentificationNumberTest extends TestCase
      */
     public function testToString(string $birthNumber)
     {
-        $nnin = NorwegianNationalIdentificationNumber::parse($birthNumber);
+        $nnin = new NorwegianNationalIdentificationNumber($birthNumber);
         self::assertSame($birthNumber, $nnin->__toString());
     }
 
@@ -55,7 +55,7 @@ class NorwegianNationalIdentificationNumberTest extends TestCase
      */
     public function testGetCountryCode(string $birthNumber)
     {
-        $nnin = NorwegianNationalIdentificationNumber::parse($birthNumber);
+        $nnin = new NorwegianNationalIdentificationNumber($birthNumber);
         self::assertSame('no', $nnin->getCountryCode());
     }
 
@@ -76,6 +76,7 @@ class NorwegianNationalIdentificationNumberTest extends TestCase
     public function invalidBirthNumbers(): array
     {
         return [
+            [''],
             ['151210-15649'],
             ['12345'],
             ['123456789123456789'],
