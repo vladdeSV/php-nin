@@ -18,7 +18,7 @@ use InvalidArgumentException;
  * - Checksum studied from
  *   - https://sv.wikipedia.org/wiki/Personnummer_i_Sverige#Kontrollsiffran
  */
-class SwedenNationalIdentificationNumber implements NationalIdentificationNumberInterface
+class SwedenPersonalIdentificationNumber implements NationalIdentificationNumberInterface
 {
     public const COUNTRY_CODE = 'se';
 

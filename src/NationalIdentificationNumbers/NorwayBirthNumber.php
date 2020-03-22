@@ -8,8 +8,6 @@ use DateTimeImmutable;
 use InvalidArgumentException;
 
 /**
- * Norwegian Birth Number
- *
  * - Follows format "DDMMYYNNNCC"
  *   - DD = day, two digit
  *   - MM = month, two digit
@@ -20,7 +18,7 @@ use InvalidArgumentException;
  * - Checksum studied from
  *   - github: svenheden/norwegian-birth-number-validator
  */
-class NorwegianNationalIdentificationNumber implements NationalIdentificationNumberInterface
+class NorwayBirthNumber implements NationalIdentificationNumberInterface
 {
     public const COUNTRY_CODE = 'no';
 

@@ -5,10 +5,10 @@ declare(strict_types=1);
 namespace NIN\Tests\NationalIdentificationNumbers;
 
 use InvalidArgumentException;
-use NIN\NationalIdentificationNumbers\FinlandNationalIdentificationNumber;
+use NIN\NationalIdentificationNumbers\FinlandPersonalIdentificationCode;
 use PHPUnit\Framework\TestCase;
 
-class FinlandNationalIdentificationNumberTest extends TestCase
+class FinlandPersonalIdentificationCodeTest extends TestCase
 {
     /**
      * @dataProvider validPersonalIdentityCodes
@@ -16,7 +16,7 @@ class FinlandNationalIdentificationNumberTest extends TestCase
      */
     public function testValidPersonalIdentityCode(string $personalIdentityCode)
     {
-        self::assertNotNull(new FinlandNationalIdentificationNumber($personalIdentityCode));
+        self::assertNotNull(new FinlandPersonalIdentificationCode($personalIdentityCode));
     }
 
     /**
@@ -27,7 +27,7 @@ class FinlandNationalIdentificationNumberTest extends TestCase
     {
         self::expectException(InvalidArgumentException::class);
 
-        new FinlandNationalIdentificationNumber($personalIdentityCode);
+        new FinlandPersonalIdentificationCode($personalIdentityCode);
     }
 
     /**
@@ -36,7 +36,7 @@ class FinlandNationalIdentificationNumberTest extends TestCase
      */
     public function testToString(string $personalIdentityCode)
     {
-        $fnin = new FinlandNationalIdentificationNumber($personalIdentityCode);
+        $fnin = new FinlandPersonalIdentificationCode($personalIdentityCode);
         self::assertNotNull($fnin);
         self::assertSame($personalIdentityCode, $fnin->__toString());
     }

@@ -20,7 +20,7 @@ use InvalidArgumentException;
  *   - https://dvv.fi/en/personal-identity-code
  *   - https://en.wikipedia.org/wiki/National_identification_number#Denmark
  */
-class FinlandNationalIdentificationNumber implements NationalIdentificationNumberInterface
+class FinlandPersonalIdentificationCode implements NationalIdentificationNumberInterface
 {
     public const COUNTRY_CODE = 'fi';
 

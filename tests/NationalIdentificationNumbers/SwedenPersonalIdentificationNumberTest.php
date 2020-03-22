@@ -5,10 +5,10 @@ declare(strict_types=1);
 namespace NIN\Tests\NationalIdentificationNumbers;
 
 use InvalidArgumentException;
-use NIN\NationalIdentificationNumbers\SwedenNationalIdentificationNumber;
+use NIN\NationalIdentificationNumbers\SwedenPersonalIdentificationNumber;
 use PHPUnit\Framework\TestCase;
 
-class SwedenNationalIdentificationNumberTest extends TestCase
+class SwedenPersonalIdentificationNumberTest extends TestCase
 {
     /**
      * @dataProvider validPersonalIdentityNumbers
@@ -16,7 +16,7 @@ class SwedenNationalIdentificationNumberTest extends TestCase
      */
     public function testValid(string $personalIdentityNumber)
     {
-        self::assertNotNull(new SwedenNationalIdentificationNumber($personalIdentityNumber));
+        self::assertNotNull(new SwedenPersonalIdentificationNumber($personalIdentityNumber));
     }
 
     /**
@@ -27,7 +27,7 @@ class SwedenNationalIdentificationNumberTest extends TestCase
     {
         self::expectException(InvalidArgumentException::class);
 
-        new SwedenNationalIdentificationNumber($personalIdentityNumber);
+        new SwedenPersonalIdentificationNumber($personalIdentityNumber);
     }
 
     /**
@@ -38,7 +38,7 @@ class SwedenNationalIdentificationNumberTest extends TestCase
     {
         self::assertSame(
             $personalIdentityNumber,
-            (new SwedenNationalIdentificationNumber($personalIdentityNumber))->__toString()
+            (new SwedenPersonalIdentificationNumber($personalIdentityNumber))->__toString()
         );
     }
 
@@ -48,7 +48,7 @@ class SwedenNationalIdentificationNumberTest extends TestCase
      */
     public function testCountryCode(string $personalIdentityNumber)
     {
-        $snin = new SwedenNationalIdentificationNumber($personalIdentityNumber);
+        $snin = new SwedenPersonalIdentificationNumber($personalIdentityNumber);
 
         self::assertSame('se', $snin->getCountryCode());
     }

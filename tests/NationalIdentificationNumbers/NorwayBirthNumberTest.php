@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace NIN\Tests\NationalIdentificationNumbers;
 
 use InvalidArgumentException;
-use NIN\NationalIdentificationNumbers\NorwegianNationalIdentificationNumber;
+use NIN\NationalIdentificationNumbers\NorwayBirthNumber;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -13,7 +13,7 @@ use PHPUnit\Framework\TestCase;
  * - github: mikaello/norwegian-national-id-validator
  * - github: svenheden/norwegian-birth-number-validator
  */
-class NorwegianNationalIdentificationNumberTest extends TestCase
+class NorwayBirthNumberTest extends TestCase
 {
     /**
      * @dataProvider validBirthNumbers
@@ -22,7 +22,7 @@ class NorwegianNationalIdentificationNumberTest extends TestCase
      */
     public function testParseValid(string $birthNumber)
     {
-        self::assertNotNull(new NorwegianNationalIdentificationNumber($birthNumber));
+        self::assertNotNull(new NorwayBirthNumber($birthNumber));
     }
 
     /**
@@ -34,7 +34,7 @@ class NorwegianNationalIdentificationNumberTest extends TestCase
     {
         $this->expectException(InvalidArgumentException::class);
 
-        new NorwegianNationalIdentificationNumber($birthNumber);
+        new NorwayBirthNumber($birthNumber);
     }
 
     /**
@@ -44,7 +44,7 @@ class NorwegianNationalIdentificationNumberTest extends TestCase
      */
     public function testToString(string $birthNumber)
     {
-        $nnin = new NorwegianNationalIdentificationNumber($birthNumber);
+        $nnin = new NorwayBirthNumber($birthNumber);
         self::assertSame($birthNumber, $nnin->__toString());
     }
 
@@ -55,7 +55,7 @@ class NorwegianNationalIdentificationNumberTest extends TestCase
      */
     public function testGetCountryCode(string $birthNumber)
     {
-        $nnin = new NorwegianNationalIdentificationNumber($birthNumber);
+        $nnin = new NorwayBirthNumber($birthNumber);
         self::assertSame('no', $nnin->getCountryCode());
     }
 
