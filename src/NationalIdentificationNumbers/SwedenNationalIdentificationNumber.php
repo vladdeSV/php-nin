@@ -7,6 +7,17 @@ namespace NIN\NationalIdentificationNumbers;
 use DateTimeImmutable;
 use InvalidArgumentException;
 
+/**
+ * - Follows format "YYMMDD±NNNC"
+ *   - YY = year, two digit
+ *   - MM = month, two digit
+ *   - DD = day, two digit
+ *   - NNN = individual number, three digit
+ *   - C = checksum, single digit
+ * - Individual numbers are even for females and odd for males
+ * - Checksum studied from
+ *   - https://sv.wikipedia.org/wiki/Personnummer_i_Sverige#Kontrollsiffran
+ */
 class SwedenNationalIdentificationNumber implements NationalIdentificationNumberInterface
 {
     public const COUNTRY_CODE = 'se';
