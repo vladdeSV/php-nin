@@ -78,8 +78,7 @@ class SwedenNationalIdentificationNumber implements NationalIdentificationNumber
             return null;
         }
 
-        $str = "$year-$month-$day";
-        return DateTimeImmutable::createFromFormat('Y-m-d', $str);
+        return DateTimeImmutable::createFromFormat('Y-m-d', "$year-$month-$day");
     }
 
     private function isValidPersonalIdentityNumber(DateTimeImmutable $dateTime, int $individualNumber, int $checksum): bool
@@ -115,6 +114,7 @@ class SwedenNationalIdentificationNumber implements NationalIdentificationNumber
         // source: https://sv.wikipedia.org/wiki/Personnummer_i_Sverige#Kontrollsiffran
         return (10 - ($number % 10)) % 10;
     }
+
     /**
      * @var DateTimeImmutable
      */
