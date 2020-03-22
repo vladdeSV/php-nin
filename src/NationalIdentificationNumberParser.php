@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace NIN;
 
 use Exception;
+use NIN\NationalIdentificationNumbers\FinlandNationalIdentificationNumber;
 use NIN\NationalIdentificationNumbers\NationalIdentificationNumberInterface;
 use NIN\NationalIdentificationNumbers\NorwegianNationalIdentificationNumber;
 use NIN\NationalIdentificationNumbers\SwedenNationalIdentificationNumber;
@@ -33,5 +34,6 @@ final class NationalIdentificationNumberParser
     private const AVAILABLE_COUNTRY_CODES = [
         SwedenNationalIdentificationNumber::COUNTRY_CODE => SwedenNationalIdentificationNumber::class,
         NorwegianNationalIdentificationNumber::COUNTRY_CODE => NorwegianNationalIdentificationNumber::class,
+        FinlandNationalIdentificationNumber::COUNTRY_CODE => FinlandNationalIdentificationNumber::class,
     ];
 }
