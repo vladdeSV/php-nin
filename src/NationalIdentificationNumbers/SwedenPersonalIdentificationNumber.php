@@ -25,25 +25,15 @@ class SwedenPersonalIdentificationNumber implements NationalIdentificationNumber
     private const REGEX_PERSONAL_IDENTITY_NUMBER = /** @lang PhpRegExp */
         '/^(\d{6})([-+])(\d{3})(\d)$/';
 
-    public function __construct(string $nationalIdentificationNumber)
+    private const REGEX_PERSONAL_IDENTITY_NUMBER_FULL = /** @lang PhpRegExp */
+        '/^((\d{4})(\d{2})(\d{2}))(\d{3})(\d)$/';
+
+    public function __construct(string $personalIdentificationNumber)
     {
-        $matches = [];
-        if (!preg_match(self::REGEX_PERSONAL_IDENTITY_NUMBER, $nationalIdentificationNumber, $matches)) {
-            throw new InvalidArgumentException('Invalid format. Must follow YYMMDD±XXXX');
-        }
+        ['date' => $date, 'individualNumber' => $individualNumber, 'checksum' => $checksum] = $this->getInformationFromPersonalIdentificationNumber($personalIdentificationNumber);
 
-        $separator = $matches[2];
-        $individualNumber = (int)$matches[3];
-        $checksum = (int)$matches[4];
-
-        [$year, $month, $day] = str_split($matches[1], 2);
-        $year = (int)$year;
-        $month = (int)$month;
-        $day = (int)$day;
-
-        $date = $this->calculateDate($year, $month, $day, $separator);
         if ($date === null) {
-            throw new InvalidArgumentException("Invalid date. {$year}-{$month}-{$day} does not exist.");
+            throw new InvalidArgumentException("Invalid date.");
         }
 
         if (!$this->isValidPersonalIdentityNumber($date, $individualNumber, $checksum)) {
@@ -113,6 +103,43 @@ class SwedenPersonalIdentificationNumber implements NationalIdentificationNumber
     {
         // source: https://sv.wikipedia.org/wiki/Personnummer_i_Sverige#Kontrollsiffran
         return (10 - ($number % 10)) % 10;
+    }
+
+    private function getInformationFromPersonalIdentificationNumber(string $personalIdentificationNumber): array
+    {
+        $matches = [];
+        if (preg_match(self::REGEX_PERSONAL_IDENTITY_NUMBER, $personalIdentificationNumber, $matches)) {
+
+            $separator = $matches[2];
+            $individualNumber = (int)$matches[3];
+            $checksum = (int)$matches[4];
+
+            [$twoDigitYear, $month, $day] = str_split($matches[1], 2);
+            $twoDigitYear = (int)$twoDigitYear;
+            $month = (int)$month;
+            $day = (int)$day;
+
+            $date = $this->calculateDate($twoDigitYear, $month, $day, $separator);
+
+            return ['date' => $date, 'individualNumber' => $individualNumber, 'checksum' => $checksum];
+
+        } else if (preg_match(self::REGEX_PERSONAL_IDENTITY_NUMBER_FULL, $personalIdentificationNumber, $matches)) {
+
+            $year = (int)$matches[2];
+            $month = (int)$matches[3];
+            $day = (int)$matches[4];
+            $individualNumber = (int)$matches[5];
+            $checksum = (int)$matches[6];
+
+            $date = null;
+            if (checkdate($month, $day, $year)) {
+                $date = DateTimeImmutable::createFromFormat('Y-m-d', "$year-$month-$day");
+            }
+
+            return ['date' => $date, 'individualNumber' => $individualNumber, 'checksum' => $checksum];
+        } else {
+            throw new InvalidArgumentException('Invalid format.');
+        }
     }
 
     /**
