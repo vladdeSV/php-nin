@@ -9,16 +9,15 @@ This library validates National Identification Numbers (NINs).
 * Norway
 * Finland
 
-
 ## Usage
 
 ```php
 use NIN\NationalIdentificationNumberParser;
 
-$nin = NationalIdentificationNumberParser::tryParse('890629-1870', 'se');
+$nin = NationalIdentificationNumberParser::tryParse('890629-1870', 'SE');
 
 echo $nin;                   // '890629-1870'
-echo $nin->getCountryCode(); // 'se'
+echo $nin->getCountryCode(); // 'SE'
 ```
 
 ## Installation
