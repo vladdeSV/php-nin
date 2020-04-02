@@ -20,7 +20,7 @@ use InvalidArgumentException;
  */
 class SwedenPersonalIdentificationNumber implements NationalIdentificationNumberInterface
 {
-    public const COUNTRY_CODE = 'se';
+    public const COUNTRY_CODE = 'SE';
 
     private const REGEX_PERSONAL_IDENTITY_NUMBER = /** @lang PhpRegExp */
         '/^(\d{6})([-+])(\d{3})(\d)$/';

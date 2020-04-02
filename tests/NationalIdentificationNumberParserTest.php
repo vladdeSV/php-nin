@@ -29,7 +29,7 @@ class NationalIdentificationNumberParserTest extends TestCase
     {
         self::expectException(InvalidArgumentException::class);
 
-        NationalIdentificationNumberParser::parse('abc123', 'se');
+        NationalIdentificationNumberParser::parse('abc123', 'SE');
     }
 
     public function testInvalidCountry()
@@ -41,18 +41,18 @@ class NationalIdentificationNumberParserTest extends TestCase
 
     public function testTryParse()
     {
-        self::assertNull(NationalIdentificationNumberParser::tryParse('', 'se'));
+        self::assertNull(NationalIdentificationNumberParser::tryParse('', 'SE'));
         self::assertNull(NationalIdentificationNumberParser::tryParse('foobar', ''));
 
-        self::assertNotNull(NationalIdentificationNumberParser::tryParse('990214+0095', 'se'));
+        self::assertNotNull(NationalIdentificationNumberParser::tryParse('990214+0095', 'SE'));
     }
 
     public function nationalIdentityNumberCountry(): array
     {
         return [
-            ['790315-0667', 'se'],
-            ['15121015649', 'no'],
-            ['131052-308T', 'fi'],
+            ['790315-0667', 'SE'],
+            ['15121015649', 'NO'],
+            ['131052-308T', 'FI'],
         ];
     }
 }

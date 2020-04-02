@@ -50,7 +50,7 @@ class SwedenPersonalIdentificationNumberTest extends TestCase
     {
         $snin = new SwedenPersonalIdentificationNumber($personalIdentityNumber);
 
-        self::assertSame('se', $snin->getCountryCode());
+        self::assertSame(SwedenPersonalIdentificationNumber::COUNTRY_CODE, $snin->getCountryCode());
     }
 
     public function validPersonalIdentityNumbers(): array

@@ -22,7 +22,7 @@ use InvalidArgumentException;
  */
 class FinlandPersonalIdentificationCode implements NationalIdentificationNumberInterface
 {
-    public const COUNTRY_CODE = 'fi';
+    public const COUNTRY_CODE = 'FI';
 
     private const REGEX_PERSONAL_IDENTITY_CODE = /** @lang PhpRegExp */
         '/^(\d{6})([-+A])(\d{3})([\dA-Y])$/';

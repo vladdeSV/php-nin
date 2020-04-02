@@ -41,6 +41,16 @@ class FinlandPersonalIdentificationCodeTest extends TestCase
         self::assertSame($personalIdentityCode, $fnin->__toString());
     }
 
+    /**
+     * @dataProvider validPersonalIdentityCodes
+     * @param string $personalIdentityCode
+     */
+    public function testGetCountryCode(string $personalIdentityCode)
+    {
+        $fnin = new FinlandPersonalIdentificationCode($personalIdentityCode);
+        self::assertSame(FinlandPersonalIdentificationCode::COUNTRY_CODE, $fnin->getCountryCode());
+    }
+
     public function validPersonalIdentityCodes(): array
     {
         return [

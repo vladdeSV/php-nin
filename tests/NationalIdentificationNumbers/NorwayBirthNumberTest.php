@@ -56,7 +56,7 @@ class NorwayBirthNumberTest extends TestCase
     public function testGetCountryCode(string $birthNumber)
     {
         $nnin = new NorwayBirthNumber($birthNumber);
-        self::assertSame('no', $nnin->getCountryCode());
+        self::assertSame(NorwayBirthNumber::COUNTRY_CODE, $nnin->getCountryCode());
     }
 
     public function validBirthNumbers(): array

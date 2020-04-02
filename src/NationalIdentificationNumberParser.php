@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace NIN;
 
 use Exception;
+use NIN\Helpers\CountryCodeHelper;
 use NIN\NationalIdentificationNumbers\FinlandPersonalIdentificationCode;
 use NIN\NationalIdentificationNumbers\NationalIdentificationNumberInterface;
 use NIN\NationalIdentificationNumbers\NorwayBirthNumber;
@@ -14,12 +15,20 @@ final class NationalIdentificationNumberParser
 {
     public static function parse(string $nationalIdentificationNumber, string $countryCode): NationalIdentificationNumberInterface
     {
-        if (!isset(self::AVAILABLE_COUNTRY_CODES[$countryCode])) {
-            throw new Exception("'$countryCode' is not supported.");
+        if (!CountryCodeHelper::isValidCountryCode($countryCode)) {
+            throw new Exception("'$countryCode' is not a valid country code.");
         }
 
-        $nin = self::AVAILABLE_COUNTRY_CODES[$countryCode];
-        return new $nin($nationalIdentificationNumber);
+        switch ($countryCode) {
+            default:
+                throw new Exception("'$countryCode' is not supported.");
+            case SwedenPersonalIdentificationNumber::COUNTRY_CODE:
+                return new SwedenPersonalIdentificationNumber($nationalIdentificationNumber);
+            case NorwayBirthNumber::COUNTRY_CODE:
+                return new NorwayBirthNumber($nationalIdentificationNumber);
+            case FinlandPersonalIdentificationCode::COUNTRY_CODE:
+                return new FinlandPersonalIdentificationCode($nationalIdentificationNumber);
+        }
     }
 
     public static function tryParse(string $nationalIdentificationNumber, string $countryCode): ?NationalIdentificationNumberInterface
@@ -31,9 +40,4 @@ final class NationalIdentificationNumberParser
         }
     }
 
-    private const AVAILABLE_COUNTRY_CODES = [
-        SwedenPersonalIdentificationNumber::COUNTRY_CODE => SwedenPersonalIdentificationNumber::class,
-        NorwayBirthNumber::COUNTRY_CODE => NorwayBirthNumber::class,
-        FinlandPersonalIdentificationCode::COUNTRY_CODE => FinlandPersonalIdentificationCode::class,
-    ];
 }

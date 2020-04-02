@@ -20,7 +20,7 @@ use InvalidArgumentException;
  */
 class NorwayBirthNumber implements NationalIdentificationNumberInterface
 {
-    public const COUNTRY_CODE = 'no';
+    public const COUNTRY_CODE = 'NO';
 
     private const REGEX_BIRTH_NUMBER = /** @lang PhpRegExp */
         '/^(\d{6})(\d{3})(\d{2})$/';
