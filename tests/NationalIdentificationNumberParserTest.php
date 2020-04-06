@@ -39,6 +39,13 @@ class NationalIdentificationNumberParserTest extends TestCase
         NationalIdentificationNumberParser::parse('', 'xx');
     }
 
+    public function testUnsupportedCountry()
+    {
+        self::expectException(Exception::class);
+
+        NationalIdentificationNumberParser::parse('', 'PL');
+    }
+
     public function testTryParse()
     {
         self::assertNull(NationalIdentificationNumberParser::tryParse('', 'SE'));

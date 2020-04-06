@@ -55,6 +55,9 @@ class FinlandPersonalIdentificationCodeTest extends TestCase
     {
         return [
             ['131052-308T'],
+            ['131052+308T'],
+            ['131052A308T'],
+            ['131052-9085'], // temporary number
         ];
     }
 
@@ -65,6 +68,9 @@ class FinlandPersonalIdentificationCodeTest extends TestCase
             ['abc123'],
             [''],
             ['290219A3085'],
+            ['131052-001T'],
+            ['131052-308A'], // invalid checksum
+            ['131052.308T'],
         ];
     }
 }

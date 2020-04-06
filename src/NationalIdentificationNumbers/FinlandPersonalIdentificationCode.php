@@ -52,9 +52,8 @@ class FinlandPersonalIdentificationCode implements NationalIdentificationNumberI
         [$day, $month, $twoDigitYear] = str_split($dateString, 2);
 
         $century = null;
+        /** @noinspection PhpSwitchCaseWithoutDefaultBranchInspection RegExp ensures separator is either +, -, or A */
         switch ($separator) {
-            default:
-                throw new Exception("Unkown separator.");
             case '+':
                 $century = 18;
                 break;
@@ -92,9 +91,8 @@ class FinlandPersonalIdentificationCode implements NationalIdentificationNumberI
     {
         $century = (int)((int)$this->date->format('Y') / 100);
         $separator = null;
+        /** @noinspection PhpSwitchCaseWithoutDefaultBranchInspection Invalid dates are filtered on creation */
         switch ($century) {
-            default:
-                assert(0);
             case 18:
                 $separator = '+';
                 break;

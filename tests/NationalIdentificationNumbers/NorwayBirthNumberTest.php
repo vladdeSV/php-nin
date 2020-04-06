@@ -92,6 +92,7 @@ class NorwayBirthNumberTest extends TestCase
             ['28158817947'],
             ['17014829936'],
             ['11089031893'],
+            ['42052099212'],
         ];
     }
 }
