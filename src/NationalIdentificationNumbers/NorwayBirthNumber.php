@@ -103,25 +103,20 @@ class NorwayBirthNumber implements NationalIdentificationNumberInterface
         $twoDigitYearNumber = (int)$twoDigitYear;
         $individualNumberNumber = (int)$individualNumber;
 
+        $year = null;
+
         if ($this->isNumberInRange($individualNumberNumber, 500, 749) && $this->isNumberInRange($twoDigitYearNumber, 54, 99)) {
-            return (int)("18{$twoDigitYear}");
+            $year = (int)("18{$twoDigitYear}");
+        } else if ($this->isNumberInRange($individualNumberNumber, 499, 999) && $this->isNumberInRange($twoDigitYearNumber, 40, 99)) {
+            // special case for people born between 1940 -> 1999, span also includes 900-999
+            $year = (int)("19{$twoDigitYear}");
+        } else if ($this->isNumberInRange($individualNumberNumber, 0, 499) && $this->isNumberInRange($twoDigitYearNumber, 00, 99)) {
+            $year = (int)("19{$twoDigitYear}");
+        } else if ($this->isNumberInRange($individualNumberNumber, 500, 999) && $this->isNumberInRange($twoDigitYearNumber, 00, 39)) {
+            $year = (int)("20{$twoDigitYear}");
         }
 
-        // special case for people born between 1940 -> 1999, span also includes 900-999
-        if ($this->isNumberInRange($individualNumberNumber, 499, 999) && $this->isNumberInRange($twoDigitYearNumber, 40, 99)) {
-            return (int)("19{$twoDigitYear}");
-        }
-
-        if ($this->isNumberInRange($individualNumberNumber, 0, 499) && $this->isNumberInRange($twoDigitYearNumber, 00, 99)) {
-            return (int)("19{$twoDigitYear}");
-        }
-
-        if ($this->isNumberInRange($individualNumberNumber, 500, 999) && $this->isNumberInRange($twoDigitYearNumber, 00, 39)) {
-            return (int)("20{$twoDigitYear}");
-        }
-
-        throw new InvalidArgumentException("Invalid birth number. Individual number '$individualNumber' is invalid for year '$twoDigitYear'.");
-
+        return $year;
     }
 
     private function isNumberInRange(int $number, int $a, int $b): bool
