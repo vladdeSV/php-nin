@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace NIN\NationalIdentificationNumbers;
 
 use DateTimeImmutable;
+use Exception;
 use InvalidArgumentException;
 
 /**
@@ -53,7 +54,7 @@ class FinlandPersonalIdentificationCode implements NationalIdentificationNumberI
         $century = null;
         switch ($separator) {
             default:
-                assert(0);
+                throw new Exception("Unkown separator.");
             case '+':
                 $century = 18;
                 break;
