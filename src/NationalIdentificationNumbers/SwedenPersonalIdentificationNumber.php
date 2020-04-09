@@ -38,7 +38,7 @@ class SwedenPersonalIdentificationNumber implements NationalIdentificationNumber
 
     public function __construct(string $personalIdentificationNumber)
     {
-        ['date' => $date, 'individualNumber' => $individualNumber, 'checksum' => $checksum] = $this->getInformationFromPersonalIdentificationNumber($personalIdentificationNumber);
+        ['date' => $date, 'individualNumber' => $individualNumber, 'checksum' => $checksum, 'isCoordinationNumber' => $isCoordinationNumber] = $this->getInformationFromPersonalIdentificationNumber($personalIdentificationNumber);
 
         if ($date === null) {
             throw new InvalidArgumentException("Invalid date.");
@@ -51,6 +51,7 @@ class SwedenPersonalIdentificationNumber implements NationalIdentificationNumber
         $this->dateTime = $date;
         $this->individualNumber = $individualNumber;
         $this->checksum = $checksum;
+        $this->isCoordinationNumber = $isCoordinationNumber;
     }
 
     public function getCountryCode(): string
@@ -61,7 +62,13 @@ class SwedenPersonalIdentificationNumber implements NationalIdentificationNumber
     public function __toString(): string
     {
         $separator = $this->dateTime->diff(new DateTimeImmutable())->y >= 100 ? '+' : '-';
-        return sprintf('%02d%02d%02d%s%03d%d', ((int)$this->dateTime->format('Y')) % 100, (int)$this->dateTime->format('m'), (int)$this->dateTime->format('d'), $separator, $this->individualNumber, $this->checksum);
+
+        $day = (int)$this->dateTime->format('d');
+        if ($this->isCoordinationNumber) {
+            $day += 60;
+        }
+
+        return sprintf('%02d%02d%02d%s%03d%d', ((int)$this->dateTime->format('Y')) % 100, (int)$this->dateTime->format('m'), $day, $separator, $this->individualNumber, $this->checksum);
     }
 
     private function calculateDate(int $twoDigitYear, int $month, int $day, string $separator): ?DateTimeImmutable
@@ -127,27 +134,44 @@ class SwedenPersonalIdentificationNumber implements NationalIdentificationNumber
             $month = (int)$month;
             $day = (int)$day;
 
-            $date = $this->calculateDate($twoDigitYear, $month, $day, $separator);
-
-            return ['date' => $date, 'individualNumber' => $individualNumber, 'checksum' => $checksum];
-
-        } else if (preg_match(self::REGEX_PERSONAL_IDENTITY_NUMBER_FULL, $personalIdentificationNumber, $matches)) {
-
-            $year = (int)$matches[2];
-            $month = (int)$matches[3];
-            $day = (int)$matches[4];
-            $individualNumber = (int)$matches[5];
-            $checksum = (int)$matches[6];
-
-            $date = null;
-            if (checkdate($month, $day, $year)) {
-                $date = DateTimeImmutable::createFromFormat('Y-m-d', "$year-$month-$day");
+            $isCoordinationNumber = $this->isCoordinationNumber($day);
+            if ($isCoordinationNumber) {
+                $day -= 60;
             }
 
-            return ['date' => $date, 'individualNumber' => $individualNumber, 'checksum' => $checksum];
+            $date = $this->calculateDate($twoDigitYear, $month, $day, $separator);
+
+            return ['date' => $date, 'individualNumber' => $individualNumber, 'checksum' => $checksum, 'isCoordinationNumber' => $isCoordinationNumber];
+
         } else {
-            throw new InvalidArgumentException('Invalid format.');
+            if (preg_match(self::REGEX_PERSONAL_IDENTITY_NUMBER_FULL, $personalIdentificationNumber, $matches)) {
+
+                $year = (int)$matches[2];
+                $month = (int)$matches[3];
+                $day = (int)$matches[4];
+                $individualNumber = (int)$matches[5];
+                $checksum = (int)$matches[6];
+
+                $isCoordinationNumber = $this->isCoordinationNumber($day);
+                if ($isCoordinationNumber) {
+                    $day -= 60;
+                }
+
+                $date = null;
+                if (checkdate($month, $day, $year)) {
+                    $date = DateTimeImmutable::createFromFormat('Y-m-d', "$year-$month-$day");
+                }
+
+                return ['date' => $date, 'individualNumber' => $individualNumber, 'checksum' => $checksum, 'isCoordinationNumber' => $isCoordinationNumber];
+            } else {
+                throw new InvalidArgumentException('Invalid format.');
+            }
         }
+    }
+
+    private function isCoordinationNumber(int $day): bool
+    {
+        return $day > 60 && $day <= (31 + 60);
     }
 
     /**
@@ -162,4 +186,9 @@ class SwedenPersonalIdentificationNumber implements NationalIdentificationNumber
      * @var int
      */
     private $checksum;
+
+    /**
+     * @var bool
+     */
+    private $isCoordinationNumber;
 }

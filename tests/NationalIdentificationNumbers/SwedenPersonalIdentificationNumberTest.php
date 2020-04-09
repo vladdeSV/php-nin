@@ -87,6 +87,9 @@ class SwedenPersonalIdentificationNumberTest extends TestCase
             ['690628-3384'],
             ['200314+4355'],
             ['200314-4355'],
+            ['200374-4355'],
+            ['180970+4068'],
+            ['690688-3384']
         ];
     }
 
