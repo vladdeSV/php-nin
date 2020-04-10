@@ -31,10 +31,10 @@ class SwedenPersonalIdentificationNumber implements NationalIdentificationNumber
     public const COUNTRY_CODE = 'SE';
 
     private const REGEX_PERSONAL_IDENTITY_NUMBER = /** @lang PhpRegExp */
-        '/^(\d{6})([-+])(\d{3})(\d)$/';
+        '/^(?<YY>\d{2})(?<MM>\d{2})(?<DD>\d{2})(?<separator>[-+])(?<individualNumber>\d{3})(?<checksum>\d)$/';
 
     private const REGEX_PERSONAL_IDENTITY_NUMBER_FULL = /** @lang PhpRegExp */
-        '/^((\d{4})(\d{2})(\d{2}))(\d{3})(\d)$/';
+        '/^(?<YYYY>\d{4})(?<MM>\d{2})(?<DD>\d{2})(?<individualNumber>\d{3})(?<checksum>\d)$/';
 
     public function __construct(string $personalIdentificationNumber)
     {
@@ -71,7 +71,7 @@ class SwedenPersonalIdentificationNumber implements NationalIdentificationNumber
         return sprintf('%02d%02d%02d%s%03d%d', ((int)$this->dateTime->format('Y')) % 100, (int)$this->dateTime->format('m'), $day, $separator, $this->individualNumber, $this->checksum);
     }
 
-    private function calculateDate(int $twoDigitYear, int $month, int $day, string $separator): ?DateTimeImmutable
+    private function calculateYearFromTwoDigitYearAndSeparator(int $twoDigitYear, string $separator): int
     {
         $currentYear = (int)(new DateTimeImmutable())->format('Y');
         $year = ((int)(($currentYear - $twoDigitYear) / 100)) * 100 + $twoDigitYear;
@@ -79,11 +79,7 @@ class SwedenPersonalIdentificationNumber implements NationalIdentificationNumber
             $year -= 100;
         }
 
-        if (!checkdate($month, $day, $year)) {
-            return null;
-        }
-
-        return DateTimeImmutable::createFromFormat('Y-m-d', "$year-$month-$day");
+        return $year;
     }
 
     private function isValidPersonalIdentityNumber(DateTimeImmutable $dateTime, int $individualNumber, int $checksum): bool
@@ -123,50 +119,36 @@ class SwedenPersonalIdentificationNumber implements NationalIdentificationNumber
     private function getInformationFromPersonalIdentificationNumber(string $personalIdentificationNumber): array
     {
         $matches = [];
+
+        $year = null;
         if (preg_match(self::REGEX_PERSONAL_IDENTITY_NUMBER, $personalIdentificationNumber, $matches)) {
+            $twoDigitYear = (int)$matches['YY'];
+            $separator = $matches['separator'];
+            $year = $this->calculateYearFromTwoDigitYearAndSeparator($twoDigitYear, $separator);
 
-            $separator = $matches[2];
-            $individualNumber = (int)$matches[3];
-            $checksum = (int)$matches[4];
-
-            [$twoDigitYear, $month, $day] = str_split($matches[1], 2);
-            $twoDigitYear = (int)$twoDigitYear;
-            $month = (int)$month;
-            $day = (int)$day;
-
-            $isCoordinationNumber = $this->isCoordinationNumber($day);
-            if ($isCoordinationNumber) {
-                $day -= 60;
-            }
-
-            $date = $this->calculateDate($twoDigitYear, $month, $day, $separator);
-
-            return ['date' => $date, 'individualNumber' => $individualNumber, 'checksum' => $checksum, 'isCoordinationNumber' => $isCoordinationNumber];
-
+        } else if (preg_match(self::REGEX_PERSONAL_IDENTITY_NUMBER_FULL, $personalIdentificationNumber, $matches)) {
+            $year = (int)$matches['YYYY'];
         } else {
-            if (preg_match(self::REGEX_PERSONAL_IDENTITY_NUMBER_FULL, $personalIdentificationNumber, $matches)) {
-
-                $year = (int)$matches[2];
-                $month = (int)$matches[3];
-                $day = (int)$matches[4];
-                $individualNumber = (int)$matches[5];
-                $checksum = (int)$matches[6];
-
-                $isCoordinationNumber = $this->isCoordinationNumber($day);
-                if ($isCoordinationNumber) {
-                    $day -= 60;
-                }
-
-                $date = null;
-                if (checkdate($month, $day, $year)) {
-                    $date = DateTimeImmutable::createFromFormat('Y-m-d', "$year-$month-$day");
-                }
-
-                return ['date' => $date, 'individualNumber' => $individualNumber, 'checksum' => $checksum, 'isCoordinationNumber' => $isCoordinationNumber];
-            } else {
-                throw new InvalidArgumentException('Invalid format.');
-            }
+            throw new InvalidArgumentException('Invalid format.');
         }
+
+        $month = (int)$matches['MM'];
+        $day = (int)$matches['DD'];
+
+        $individualNumber = (int)$matches['individualNumber'];
+        $checksum = (int)$matches['checksum'];
+
+        $isCoordinationNumber = $this->isCoordinationNumber($day);
+        if ($isCoordinationNumber) {
+            $day -= 60;
+        }
+
+        $date = null;
+        if (checkdate($month, $day, $year)) {
+            $date = DateTimeImmutable::createFromFormat('Y-m-d', "$year-$month-$day");
+        }
+
+        return ['date' => $date, 'individualNumber' => $individualNumber, 'checksum' => $checksum, 'isCoordinationNumber' => $isCoordinationNumber];
     }
 
     private function isCoordinationNumber(int $day): bool
