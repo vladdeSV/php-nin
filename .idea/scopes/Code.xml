@@ -1,0 +1,3 @@
+<component name="DependencyValidationManager">
+  <scope name="Code" pattern="file[php-nin]:src//*||file[php-nin]:tests//*" />
+</component>
