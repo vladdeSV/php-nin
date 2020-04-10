@@ -115,7 +115,6 @@ class FinlandPersonalIdentificationCode implements NationalIdentificationNumberI
                 break;
         }
 
-        assert($separator !== null);
         return $separator;
     }
 
