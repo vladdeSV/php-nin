@@ -31,10 +31,19 @@ class SwedenPersonalIdentificationNumber implements NationalIdentificationNumber
     public const COUNTRY_CODE = 'SE';
 
     private const REGEX_PERSONAL_IDENTITY_NUMBER = /** @lang PhpRegExp */
-        '/^(?<YY>\d{2})(?<MM>\d{2})(?<DD>\d{2})(?<separator>[-+])(?<individualNumber>\d{3})(?<checksum>\d)$/';
+        '/^(?<YY>\d{2})'
+        . '(?<MM>\d{2})'
+        . '(?<DD>\d{2})'
+        . '(?<separator>[-+])'
+        . '(?<individualNumber>\d{3})'
+        . '(?<checksum>\d)$/';
 
     private const REGEX_PERSONAL_IDENTITY_NUMBER_FULL = /** @lang PhpRegExp */
-        '/^(?<YYYY>\d{4})(?<MM>\d{2})(?<DD>\d{2})(?<individualNumber>\d{3})(?<checksum>\d)$/';
+        '/^(?<YYYY>\d{4})'
+        . '(?<MM>\d{2})'
+        . '(?<DD>\d{2})'
+        . '(?<individualNumber>\d{3})'
+        . '(?<checksum>\d)$/';
 
     public function __construct(string $personalIdentificationNumber)
     {
