@@ -67,9 +67,10 @@ class NorwayBirthNumberTest extends TestCase
             ['21081633352'],
             ['16074530617'],
             ['27075532585'],
-            ['01010100131'],
             ['42059199212'],
             ['67047000642'],
+            ['03498443531'],
+            ['43098443542'],
         ];
     }
 
@@ -77,7 +78,8 @@ class NorwayBirthNumberTest extends TestCase
     {
         return [
             [''],
-            ['151210-15649'],
+            ['151210-15649'], // has separator
+            ['43498443525'], // is both d-number and h-number
             ['12345'],
             ['123456789123456789'],
             ['abc'],
