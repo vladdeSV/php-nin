@@ -5,6 +5,18 @@ namespace NIN\NationalIdentificationNumbers;
 use DateTimeImmutable;
 use InvalidArgumentException;
 
+/**
+ * - Follows format "DDMMYYNNKC"
+ *   - DD = day, two digit
+ *   - MM = month, two digit
+ *   - YY = year, two digit
+ *   - NN = individual number, two digit
+ *   - K = checksum, single digit
+ *   - C = century digit
+ * - Checksum studied from
+ *   - https://www.skra.is/english/individuals/me-and-my-family/my-registration/id-numbers/
+ *   - https://www.skra.is/thjonusta/einstaklingar/eg-i-thjodskra/um-kennitolur/
+ */
 class IcelandIdentificationNumber implements NationalIdentificationNumberInterface
 {
     public const COUNTRY_CODE = 'IS';

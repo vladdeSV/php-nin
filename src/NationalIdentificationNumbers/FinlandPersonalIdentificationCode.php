@@ -18,7 +18,7 @@ use InvalidArgumentException;
  * - Individual numbers are even for females and odd for males
  * - Checksum studied from
  *   - https://dvv.fi/en/personal-identity-code
- *   - https://en.wikipedia.org/wiki/National_identification_number#Denmark
+ *   - https://en.wikipedia.org/wiki/National_identification_number#Finland
  */
 class FinlandPersonalIdentificationCode implements NationalIdentificationNumberInterface
 {
