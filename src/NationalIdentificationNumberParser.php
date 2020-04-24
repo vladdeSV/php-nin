@@ -6,10 +6,12 @@ namespace NIN;
 
 use Exception;
 use NIN\Helpers\CountryCodeHelper;
-use NIN\NationalIdentificationNumbers\FinlandPersonalIdentificationCode;
+use NIN\NationalIdentificationNumbers\Finland\FinlandPersonalIdentificationCode;
 use NIN\NationalIdentificationNumbers\NationalIdentificationNumberInterface;
-use NIN\NationalIdentificationNumbers\NorwayBirthNumber;
-use NIN\NationalIdentificationNumbers\SwedenPersonalIdentificationNumber;
+use NIN\NationalIdentificationNumbers\Norway\NorwayNationalIdentificationNumber;
+use NIN\NationalIdentificationNumbers\Sweden\SwedenNationalIdentificationNumber;
+use NIN\Parsers\NorwayNationalIdentificationNumberParser;
+use NIN\Parsers\SwedenNationalIdentificationNumberParser;
 
 final class NationalIdentificationNumberParser
 {
@@ -22,10 +24,10 @@ final class NationalIdentificationNumberParser
         switch ($countryCode) {
             default:
                 throw new Exception("'$countryCode' is not supported.");
-            case SwedenPersonalIdentificationNumber::COUNTRY_CODE:
-                return new SwedenPersonalIdentificationNumber($nationalIdentificationNumber);
-            case NorwayBirthNumber::COUNTRY_CODE:
-                return new NorwayBirthNumber($nationalIdentificationNumber);
+            case SwedenNationalIdentificationNumber::COUNTRY_CODE:
+                return SwedenNationalIdentificationNumberParser::parse($nationalIdentificationNumber);
+            case NorwayNationalIdentificationNumber::COUNTRY_CODE:
+                return NorwayNationalIdentificationNumberParser::parse($nationalIdentificationNumber);
             case FinlandPersonalIdentificationCode::COUNTRY_CODE:
                 return new FinlandPersonalIdentificationCode($nationalIdentificationNumber);
         }

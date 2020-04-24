@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace NIN\Tests\NationalIdentificationNumbers;
 
 use InvalidArgumentException;
-use NIN\NationalIdentificationNumbers\FinlandPersonalIdentificationCode;
+use NIN\NationalIdentificationNumbers\Finland\FinlandPersonalIdentificationCode;
 use PHPUnit\Framework\TestCase;
 
 class FinlandPersonalIdentificationCodeTest extends TestCase

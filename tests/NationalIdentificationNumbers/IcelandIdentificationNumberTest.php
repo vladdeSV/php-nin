@@ -3,7 +3,7 @@
 namespace NIN\Tests\NationalIdentificationNumbers;
 
 use InvalidArgumentException;
-use NIN\NationalIdentificationNumbers\IcelandIdentificationNumber;
+use NIN\NationalIdentificationNumbers\Iceland\IcelandIdentificationNumber;
 use PHPUnit\Framework\TestCase;
 
 class IcelandIdentificationNumberTest extends TestCase

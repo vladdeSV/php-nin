@@ -2,10 +2,11 @@
 
 declare(strict_types=1);
 
-namespace NIN\NationalIdentificationNumbers;
+namespace NIN\NationalIdentificationNumbers\Finland;
 
 use DateTimeImmutable;
 use InvalidArgumentException;
+use NIN\NationalIdentificationNumbers\NationalIdentificationNumberInterface;
 
 /**
  * - Follows format "DDMMYYCNNNK"
@@ -38,7 +39,7 @@ class FinlandPersonalIdentificationCode implements NationalIdentificationNumberI
     {
         $matches = [];
         if (!preg_match(self::REGEX_PERSONAL_IDENTITY_CODE, $nationalIdentificationNumber, $matches)) {
-            throw new InvalidArgumentException('Invalid format.');
+            throw new InvalidArgumentException("Invalid format '$nationalIdentificationNumber'.");
         }
 
         $twoDigitYear = (int)$matches['YY'];

@@ -1,9 +1,10 @@
 <?php
 
-namespace NIN\NationalIdentificationNumbers;
+namespace NIN\NationalIdentificationNumbers\Iceland;
 
 use DateTimeImmutable;
 use InvalidArgumentException;
+use NIN\NationalIdentificationNumbers\NationalIdentificationNumberInterface;
 
 /**
  * - Follows format "DDMMYYNNKC"

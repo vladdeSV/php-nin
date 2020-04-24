@@ -2,13 +2,14 @@
 
 declare(strict_types=1);
 
-namespace NIN\Tests\NationalIdentificationNumbers;
+namespace NIN\Tests\Parsers;
 
 use InvalidArgumentException;
-use NIN\NationalIdentificationNumbers\SwedenPersonalIdentificationNumber;
+use NIN\NationalIdentificationNumbers\Sweden\SwedenNationalIdentificationNumber;
+use NIN\Parsers\SwedenNationalIdentificationNumberParser;
 use PHPUnit\Framework\TestCase;
 
-class SwedenPersonalIdentificationNumberTest extends TestCase
+class SwedenNationalIdentificationNumberParserTest extends TestCase
 {
     /**
      * @dataProvider validPersonalIdentityNumbers
@@ -16,7 +17,7 @@ class SwedenPersonalIdentificationNumberTest extends TestCase
      */
     public function testValid(string $personalIdentityNumber)
     {
-        self::assertNotNull(new SwedenPersonalIdentificationNumber($personalIdentityNumber));
+        self::assertNotNull(SwedenNationalIdentificationNumberParser::parse($personalIdentityNumber));
     }
 
     /**
@@ -25,7 +26,7 @@ class SwedenPersonalIdentificationNumberTest extends TestCase
      */
     public function testValidFullLength(string $personalIdentityNumber)
     {
-        self::assertNotNull(new SwedenPersonalIdentificationNumber($personalIdentityNumber));
+        self::assertNotNull(SwedenNationalIdentificationNumberParser::parse($personalIdentityNumber));
     }
 
     /**
@@ -36,7 +37,7 @@ class SwedenPersonalIdentificationNumberTest extends TestCase
     {
         self::expectException(InvalidArgumentException::class);
 
-        new SwedenPersonalIdentificationNumber($personalIdentityNumber);
+        SwedenNationalIdentificationNumberParser::parse($personalIdentityNumber);
     }
 
     /**
@@ -47,7 +48,7 @@ class SwedenPersonalIdentificationNumberTest extends TestCase
     {
         self::assertSame(
             $personalIdentityNumber,
-            (new SwedenPersonalIdentificationNumber($personalIdentityNumber))->__toString()
+            SwedenNationalIdentificationNumberParser::parse($personalIdentityNumber)->__toString()
         );
     }
 
@@ -58,7 +59,7 @@ class SwedenPersonalIdentificationNumberTest extends TestCase
      */
     public function testFullLengthToString(string $personalIdentityNumber12, string $personalIdentityNumber10)
     {
-        $snin = new SwedenPersonalIdentificationNumber($personalIdentityNumber12);
+        $snin = SwedenNationalIdentificationNumberParser::parse($personalIdentityNumber12);
 
         self::assertSame(
             $personalIdentityNumber10,
@@ -72,9 +73,9 @@ class SwedenPersonalIdentificationNumberTest extends TestCase
      */
     public function testCountryCode(string $personalIdentityNumber)
     {
-        $snin = new SwedenPersonalIdentificationNumber($personalIdentityNumber);
+        $snin = SwedenNationalIdentificationNumberParser::parse($personalIdentityNumber);
 
-        self::assertSame(SwedenPersonalIdentificationNumber::COUNTRY_CODE, $snin->getCountryCode());
+        self::assertSame(SwedenNationalIdentificationNumber::COUNTRY_CODE, $snin->getCountryCode());
     }
 
     public function validPersonalIdentityNumbers(): array
@@ -87,9 +88,9 @@ class SwedenPersonalIdentificationNumberTest extends TestCase
             ['690628-3384'],
             ['200314+4355'],
             ['200314-4355'],
-            ['200374-4355'],
-            ['180970+4068'],
-            ['690688-3384']
+            ['200374-4352'],
+            ['180970+4065'],
+            ['690688-3381']
         ];
     }
 
