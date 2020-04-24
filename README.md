@@ -31,6 +31,7 @@ echo $nin->getCountryCode(); // 'SE'
 ## Installation
 
 ```
+// no stable version released yet
 composer require vladdesv/php-nin
 ```
 

@@ -60,6 +60,7 @@ class NationalIdentificationNumberParserTest extends TestCase
             ['790315-0667', 'SE'],
             ['15121015649', 'NO'],
             ['131052-308T', 'FI'],
+            ['1201603389', 'IS'],
         ];
     }
 }

@@ -2,13 +2,14 @@
 
 declare(strict_types=1);
 
-namespace NIN\Tests\NationalIdentificationNumbers;
+namespace NIN\Tests\Parsers;
 
 use InvalidArgumentException;
 use NIN\NationalIdentificationNumbers\Finland\FinlandPersonalIdentificationCode;
+use NIN\Parsers\FinlandNationalIdentificationNumberParser;
 use PHPUnit\Framework\TestCase;
 
-class FinlandPersonalIdentificationCodeTest extends TestCase
+class FinlandNationalIdentificationNumberParserTest extends TestCase
 {
     /**
      * @dataProvider validPersonalIdentityCodes
@@ -16,7 +17,7 @@ class FinlandPersonalIdentificationCodeTest extends TestCase
      */
     public function testValidPersonalIdentityCode(string $personalIdentityCode)
     {
-        self::assertNotNull(new FinlandPersonalIdentificationCode($personalIdentityCode));
+        self::assertNotNull(FinlandNationalIdentificationNumberParser::parse($personalIdentityCode));
     }
 
     /**
@@ -27,7 +28,7 @@ class FinlandPersonalIdentificationCodeTest extends TestCase
     {
         self::expectException(InvalidArgumentException::class);
 
-        new FinlandPersonalIdentificationCode($personalIdentityCode);
+        FinlandNationalIdentificationNumberParser::parse($personalIdentityCode);
     }
 
     /**
@@ -36,7 +37,7 @@ class FinlandPersonalIdentificationCodeTest extends TestCase
      */
     public function testToString(string $personalIdentityCode)
     {
-        $fnin = new FinlandPersonalIdentificationCode($personalIdentityCode);
+        $fnin = FinlandNationalIdentificationNumberParser::parse($personalIdentityCode);
         self::assertNotNull($fnin);
         self::assertSame($personalIdentityCode, $fnin->__toString());
     }
@@ -47,7 +48,7 @@ class FinlandPersonalIdentificationCodeTest extends TestCase
      */
     public function testGetCountryCode(string $personalIdentityCode)
     {
-        $fnin = new FinlandPersonalIdentificationCode($personalIdentityCode);
+        $fnin = FinlandNationalIdentificationNumberParser::parse($personalIdentityCode);
         self::assertSame(FinlandPersonalIdentificationCode::COUNTRY_CODE, $fnin->getCountryCode());
     }
 

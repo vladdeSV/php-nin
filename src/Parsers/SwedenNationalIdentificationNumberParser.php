@@ -58,7 +58,7 @@ abstract class SwedenNationalIdentificationNumberParser
 
         $date = DateTimeImmutable::createFromFormat('Y-m-d', "$year-$month-$day");
 
-        $calculatedChecksum = self::calculateChecksumFromDateTimeAndIndividualNumber($date, $individualNumber, $isCoordinationNumber);
+        $calculatedChecksum = SwedenNationalIdentificationNumber::calculateChecksumFromDateTimeAndIndividualNumber($date, $individualNumber, $isCoordinationNumber);
         if ($calculatedChecksum !== $checksum) {
             throw new InvalidArgumentException("Invalid personal identity number '$personalIdentificationNumber'. Expected checksum '$calculatedChecksum', got '$checksum'");
         }
@@ -86,27 +86,4 @@ abstract class SwedenNationalIdentificationNumberParser
         return $day > 60 && $day <= (31 + 60);
     }
 
-    public static function calculateChecksumFromDateTimeAndIndividualNumber(DateTimeImmutable $dateTime, int $individualNumber, bool $isCoordinationNumber)
-    {
-        $day = (int)$dateTime->format('d') + ($isCoordinationNumber ? 60 : 0);
-        $nin = sprintf('%02d%02d%02d%03d', (int)$dateTime->format('y'), (int)$dateTime->format('m'), $day, $individualNumber);
-
-        $numbers = array_map(function ($number) {
-            return (int)$number;
-        }, str_split($nin));
-
-        $modifiedNumbers = '';
-        foreach ($numbers as $index => $number) {
-            $multiplier = ($index % 2 === 0) ? 2 : 1;
-
-            $modifiedNumbers .= ($number * $multiplier);
-        }
-
-        $numbers = array_map(function ($number) {
-            return (int)$number;
-        }, str_split($modifiedNumbers));
-
-        // source: https://sv.wikipedia.org/wiki/Personnummer_i_Sverige#Kontrollsiffran
-        return (10 - (array_sum($numbers) % 10)) % 10;
-    }
 }

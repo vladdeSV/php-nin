@@ -7,9 +7,12 @@ namespace NIN;
 use Exception;
 use NIN\Helpers\CountryCodeHelper;
 use NIN\NationalIdentificationNumbers\Finland\FinlandPersonalIdentificationCode;
+use NIN\NationalIdentificationNumbers\Iceland\IcelandIdentificationNumber;
 use NIN\NationalIdentificationNumbers\NationalIdentificationNumberInterface;
 use NIN\NationalIdentificationNumbers\Norway\NorwayNationalIdentificationNumber;
 use NIN\NationalIdentificationNumbers\Sweden\SwedenNationalIdentificationNumber;
+use NIN\Parsers\FinlandNationalIdentificationNumberParser;
+use NIN\Parsers\IcelandNationalIdentificationNumberParser;
 use NIN\Parsers\NorwayNationalIdentificationNumberParser;
 use NIN\Parsers\SwedenNationalIdentificationNumberParser;
 
@@ -29,7 +32,9 @@ final class NationalIdentificationNumberParser
             case NorwayNationalIdentificationNumber::COUNTRY_CODE:
                 return NorwayNationalIdentificationNumberParser::parse($nationalIdentificationNumber);
             case FinlandPersonalIdentificationCode::COUNTRY_CODE:
-                return new FinlandPersonalIdentificationCode($nationalIdentificationNumber);
+                return FinlandNationalIdentificationNumberParser::parse($nationalIdentificationNumber);
+            case IcelandIdentificationNumber::COUNTRY_CODE:
+                return IcelandNationalIdentificationNumberParser::parse($nationalIdentificationNumber);
         }
     }
 

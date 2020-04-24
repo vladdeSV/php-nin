@@ -49,7 +49,7 @@ abstract class NorwayNationalIdentificationNumberParser
 
         $date = DateTimeImmutable::createFromFormat('Y-m-d', "$year-$MM-$DD");
 
-        $calculatedChecksum = self::calculateChecksumFromDateAndIndividualNumber($date, $individualNumber, $isDNumber, $isHNumber);
+        $calculatedChecksum = NorwayNationalIdentificationNumber::calculateChecksumFromDateAndIndividualNumber($date, $individualNumber, $isDNumber, $isHNumber);
         if ($calculatedChecksum !== $checksum) {
             throw new InvalidArgumentException("Invalid checksum. Expected '$calculatedChecksum', got '$checksum'.");
         }
@@ -61,19 +61,6 @@ abstract class NorwayNationalIdentificationNumberParser
         }
 
         return new NorwayBirthNumber($date, $individualNumber);
-    }
-
-    public static function calculateChecksumFromDateAndIndividualNumber(DateTimeImmutable $date, int $individualNumber, bool $isDNumber, bool $isHNumber): int
-    {
-        $day = (int)$date->format('d') + ($isDNumber ? 40 : 0);
-        $month = (int)$date->format('m') + ($isHNumber ? 40 : 0);
-        $numbers = sprintf('%02d%02d%02d%03d', $day, $month, (int)$date->format('y'), $individualNumber);
-
-        $k1 = 11 - ((3 * $numbers[0] + 7 * $numbers[1] + 6 * $numbers[2] + 1 * $numbers[3] + 8 * $numbers[4] + 9 * $numbers[5] + 4 * $numbers[6] + 5 * $numbers[7] + 2 * $numbers[8]) % 11);
-        $k2 = 11 - ((5 * $numbers[0] + 4 * $numbers[1] + 3 * $numbers[2] + 2 * $numbers[3] + 7 * $numbers[4] + 6 * $numbers[5] + 5 * $numbers[6] + 4 * $numbers[7] + 3 * $numbers[8] + 2 * $k1) % 11);
-
-        $str = $k1 . $k2;
-        return (int)$str;
     }
 
     private static function getYearFromIndividualNumberAndTwoDigitYear(int $individualNumber, int $twoDigitYear)

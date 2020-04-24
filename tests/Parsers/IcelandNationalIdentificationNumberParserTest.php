@@ -1,12 +1,13 @@
 <?php
 
-namespace NIN\Tests\NationalIdentificationNumbers;
+namespace NIN\Tests\Parsers;
 
 use InvalidArgumentException;
 use NIN\NationalIdentificationNumbers\Iceland\IcelandIdentificationNumber;
+use NIN\Parsers\IcelandNationalIdentificationNumberParser;
 use PHPUnit\Framework\TestCase;
 
-class IcelandIdentificationNumberTest extends TestCase
+class IcelandNationalIdentificationNumberParserTest extends TestCase
 {
     /**
      * @dataProvider validPersonalIdentityCodes
@@ -14,7 +15,7 @@ class IcelandIdentificationNumberTest extends TestCase
      */
     public function testValidPersonalIdentityCode(string $identificationNumber)
     {
-        self::assertNotNull(new IcelandIdentificationNumber($identificationNumber));
+        self::assertNotNull(IcelandNationalIdentificationNumberParser::parse($identificationNumber));
     }
 
     /**
@@ -25,7 +26,7 @@ class IcelandIdentificationNumberTest extends TestCase
     {
         self::expectException(InvalidArgumentException::class);
 
-        new IcelandIdentificationNumber($identificationNumber);
+        IcelandNationalIdentificationNumberParser::parse($identificationNumber);
     }
 
     /**
@@ -34,7 +35,7 @@ class IcelandIdentificationNumberTest extends TestCase
      */
     public function testToString(string $identificationNumber)
     {
-        $inin = new IcelandIdentificationNumber($identificationNumber);
+        $inin = IcelandNationalIdentificationNumberParser::parse($identificationNumber);
         self::assertNotNull($inin);
         self::assertSame($identificationNumber, $inin->__toString());
     }
@@ -45,13 +46,13 @@ class IcelandIdentificationNumberTest extends TestCase
      */
     public function testGetCountryCode(string $identificationNumber)
     {
-        $inin = new IcelandIdentificationNumber($identificationNumber);
+        $inin = IcelandNationalIdentificationNumberParser::parse($identificationNumber);
         self::assertSame(IcelandIdentificationNumber::COUNTRY_CODE, $inin->getCountryCode());
     }
 
     public function testAllowOptionalDash()
     {
-        self::assertNotNull(new IcelandIdentificationNumber('120160-3389'));
+        self::assertNotNull(IcelandNationalIdentificationNumberParser::parse('120160-3389'));
     }
 
     public function validPersonalIdentityCodes(): array

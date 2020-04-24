@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace NIN\Tests\NationalIdentificationNumbers;
+namespace NIN\Tests\Parsers;
 
 use InvalidArgumentException;
 use NIN\NationalIdentificationNumbers\Norway\NorwayNationalIdentificationNumber;
@@ -14,7 +14,7 @@ use PHPUnit\Framework\TestCase;
  * - github: mikaello/norwegian-national-id-validator
  * - github: svenheden/norwegian-birth-number-validator
  */
-class NorwayBirthNumberTest extends TestCase
+class NorwayNationalIdentificationNumberParserTest extends TestCase
 {
     /**
      * @dataProvider validBirthNumbers
