@@ -1,8 +1,6 @@
 # National Identification Numbers library
 [![develop](https://github.com/vladdeSV/php-nin/workflows/develop/badge.svg?branch=develop)](https://github.com/vladdeSV/php-nin/actions?query=workflow%3Adevelop)
 
-
-
 This library validates the structure of identification numbers.
 
 ## Supported countries
@@ -17,6 +15,8 @@ This library validates the structure of identification numbers.
   * Personal identity code
 * Iceland
   * Identification number
+* Denmark
+  * Personal identification number
 
 ## Usage
 
