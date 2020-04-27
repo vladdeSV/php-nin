@@ -1,5 +1,4 @@
 # National Identification Numbers library
-[![Build status](https://travis-ci.org/vladdeSV/php-nin.png?branch=master)](https://travis-ci.org/vladdeSV/php-nin) 
 [![develop](https://github.com/vladdeSV/php-nin/workflows/develop/badge.svg?branch=develop)](https://github.com/vladdeSV/php-nin/actions?query=workflow%3Adevelop)
 
 
