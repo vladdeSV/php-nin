@@ -18,6 +18,8 @@ This library validates the structure of identification numbers.
   * Personal identity code
 * Iceland
   * Identification number
+* Denmark
+  * Personal identification number
 
 ## Usage
 
