@@ -56,7 +56,13 @@ class DenmarkNationalIdentificationNumberParserTest extends TestCase
     {
         return [
             ['211062-5629'],
-            ['011007-5111'], // after sept. 30th, invalid checksum
+            ['020955-2017'],
+            ['050669-1178'],
+            ['111111-1118'],
+            ['220550-6218'],
+            ['220536-4218'],
+            ['220537-4218'],
+            ['211062-5628'], // invalid checksum, but we shouldn't check that anymore
         ];
     }
 
@@ -65,7 +71,6 @@ class DenmarkNationalIdentificationNumberParserTest extends TestCase
         return [
             [''],
             ['abc123'],
-            ['211062-5628'], // invalid checksum
             ['300262-5629'], // invalid date
         ];
     }

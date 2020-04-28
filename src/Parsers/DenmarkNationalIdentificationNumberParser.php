@@ -28,7 +28,7 @@ abstract class DenmarkNationalIdentificationNumberParser
     {
         $matches = [];
         if (!preg_match(self::REGEX_PERSONAL_IDENTIFICATION_NUMBER, $personalIdentificationNumber, $matches)) {
-            throw new InvalidArgumentException('Invalid format.');
+            throw new InvalidArgumentException("Invalid format '$personalIdentificationNumber'.");
         }
 
         $YY = (int)$matches['YY'];
@@ -42,14 +42,6 @@ abstract class DenmarkNationalIdentificationNumberParser
         }
 
         $date = DateTimeImmutable::createFromFormat('Y-m-d', "$year-$MM-$DD");
-        $isCalculateChecksum = $date < (DateTimeImmutable::createFromFormat('Y-m-d', '2007-10-01'));
-        if ($isCalculateChecksum) {
-            $checksum = (int)$matches['checksum'];
-            $calculatedChecksum = self::calculateChecksum($date, $centuryDigit, $matches['uniqueNumbers']); //fixme
-            if ($calculatedChecksum !== $checksum) {
-                throw new InvalidArgumentException("Invalid checksum.");
-            }
-        }
 
         $serialNumber = (int)$matches['serialNumber'];
 
@@ -87,24 +79,5 @@ abstract class DenmarkNationalIdentificationNumberParser
     private static function isNumberInRange(int $number, int $a, int $b): bool
     {
         return $number >= $a && $number <= $b;
-    }
-
-    private static function calculateChecksum(DateTimeImmutable $date, int $centuryDigit, int $uniqueNumbers): int
-    {
-        $s = sprintf("%02d%02d%02d%d%02d", (int)$date->format('d'), (int)$date->format('m'), (int)$date->format('y'), $centuryDigit, $uniqueNumbers);
-
-        $checksum = (int)($s[0]) * 4
-            + (int)($s[1]) * 3
-            + (int)($s[2]) * 2
-            + (int)($s[3]) * 7
-            + (int)($s[4]) * 6
-            + (int)($s[5]) * 5
-            + (int)($s[6]) * 4
-            + (int)($s[7]) * 3
-            + (int)($s[8]) * 2;
-
-        $checksum = (10 - ($checksum % 10)) % 10;
-
-        return $checksum;
     }
 }
