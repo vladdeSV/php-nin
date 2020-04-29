@@ -13,6 +13,7 @@ class DenmarkNationalIdentificationNumberParserTest extends TestCase
 {
     /**
      * @dataProvider validPersonalIdentityCodes
+     *
      * @param string $personalIdentificationNumber
      */
     public function testValidPersonalIdentityCode(string $personalIdentificationNumber)
@@ -22,6 +23,7 @@ class DenmarkNationalIdentificationNumberParserTest extends TestCase
 
     /**
      * @dataProvider invalidPersonalIdentityCodes
+     *
      * @param string $personalIdentificationNumber
      */
     public function testInvalidPersonalIdentityCode($personalIdentificationNumber)
@@ -33,6 +35,7 @@ class DenmarkNationalIdentificationNumberParserTest extends TestCase
 
     /**
      * @dataProvider validPersonalIdentityCodes
+     *
      * @param string $personalIdentificationNumber
      */
     public function testToString(string $personalIdentificationNumber)
@@ -44,6 +47,7 @@ class DenmarkNationalIdentificationNumberParserTest extends TestCase
 
     /**
      * @dataProvider validPersonalIdentityCodes
+     *
      * @param string $personalIdentificationNumber
      */
     public function testGetCountryCode(string $personalIdentificationNumber)

@@ -13,8 +13,10 @@ class NationalIdentificationNumberParserTest extends TestCase
 {
     /**
      * @dataProvider nationalIdentityNumberCountry
+     *
      * @param string $nin
      * @param string $countryCode
+     *
      * @throws Exception
      */
     public function testParseValid(string $nin, string $countryCode)

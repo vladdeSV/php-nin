@@ -35,10 +35,12 @@ abstract class SwedenNationalIdentificationNumberParser
             $twoDigitYear = (int)$matches['YY'];
             $separator = $matches['separator'];
             $year = self::calculateYearFromTwoDigitYearAndSeparator($twoDigitYear, $separator);
-        } else if (preg_match(self::REGEX_PERSONAL_IDENTITY_NUMBER_FULL, $personalIdentificationNumber, $matches)) {
-            $year = (int)$matches['YYYY'];
         } else {
-            throw new InvalidArgumentException("Invalid format '$personalIdentificationNumber'.");
+            if (preg_match(self::REGEX_PERSONAL_IDENTITY_NUMBER_FULL, $personalIdentificationNumber, $matches)) {
+                $year = (int)$matches['YYYY'];
+            } else {
+                throw new InvalidArgumentException("Invalid format '$personalIdentificationNumber'.");
+            }
         }
 
         $month = (int)$matches['MM'];
@@ -84,5 +86,4 @@ abstract class SwedenNationalIdentificationNumberParser
     {
         return ($day > 60) && ($day <= 31 + 60);
     }
-
 }

@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace NIN\Tests\Helpers;
@@ -10,6 +11,7 @@ class CountryCodeHelperTest extends TestCase
 {
     /**
      * @dataProvider validCountryCodes
+     *
      * @param string $countryCode
      */
     public function testValidCountryCodes(string $countryCode)
@@ -19,6 +21,7 @@ class CountryCodeHelperTest extends TestCase
 
     /**
      * @dataProvider invalidCountryCodes
+     *
      * @param string $countryCode
      */
     public function testInvalidCountryCodes(string $countryCode)

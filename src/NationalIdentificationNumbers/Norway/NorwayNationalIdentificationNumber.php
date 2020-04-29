@@ -27,6 +27,7 @@ abstract class NorwayNationalIdentificationNumber implements NationalIdentificat
         $k2 = 11 - (((5 * $numbers[0]) + (4 * $numbers[1]) + (3 * $numbers[2]) + (2 * $numbers[3]) + (7 * $numbers[4]) + (6 * $numbers[5]) + (5 * $numbers[6]) + (4 * $numbers[7]) + (3 * $numbers[8]) + (2 * $k1)) % 11);
 
         $str = $k1 . $k2;
+
         return (int)$str;
     }
 

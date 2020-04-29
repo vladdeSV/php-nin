@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace NIN\Parsers;
@@ -52,17 +53,25 @@ abstract class DenmarkNationalIdentificationNumberParser
 
         if (self::isNumberInRange($centuryDigit, 0, 3)) {
             $year = 1900 + $twoDigitYear;
-        } else if (($centuryDigit === 4) || ($centuryDigit === 9)) {
-            if (self::isNumberInRange($twoDigitYear, 0, 36)) {
-                $year = 2000 + $twoDigitYear;
-            } else if (self::isNumberInRange($twoDigitYear, 37, 99)) {
-                $year = 1900 + $twoDigitYear;
-            }
-        } else if (self::isNumberInRange($centuryDigit, 5, 8)) {
-            if (self::isNumberInRange($twoDigitYear, 0, 57)) {
-                $year = 2000 + $twoDigitYear;
-            } else if (self::isNumberInRange($twoDigitYear, 58, 99)) {
-                $year = 1800 + $twoDigitYear;
+        } else {
+            if (($centuryDigit === 4) || ($centuryDigit === 9)) {
+                if (self::isNumberInRange($twoDigitYear, 0, 36)) {
+                    $year = 2000 + $twoDigitYear;
+                } else {
+                    if (self::isNumberInRange($twoDigitYear, 37, 99)) {
+                        $year = 1900 + $twoDigitYear;
+                    }
+                }
+            } else {
+                if (self::isNumberInRange($centuryDigit, 5, 8)) {
+                    if (self::isNumberInRange($twoDigitYear, 0, 57)) {
+                        $year = 2000 + $twoDigitYear;
+                    } else {
+                        if (self::isNumberInRange($twoDigitYear, 58, 99)) {
+                            $year = 1800 + $twoDigitYear;
+                        }
+                    }
+                }
             }
         }
 
