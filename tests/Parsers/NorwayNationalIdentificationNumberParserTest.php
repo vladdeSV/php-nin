@@ -9,11 +9,6 @@ use NIN\NationalIdentificationNumbers\Norway\NorwayNationalIdentificationNumber;
 use NIN\Parsers\NorwayNationalIdentificationNumberParser;
 use PHPUnit\Framework\TestCase;
 
-/**
- * Example birth numbers taken from
- * - github: mikaello/norwegian-national-id-validator
- * - github: svenheden/norwegian-birth-number-validator
- */
 class NorwayNationalIdentificationNumberParserTest extends TestCase
 {
     /**

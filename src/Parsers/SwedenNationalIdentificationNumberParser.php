@@ -8,7 +8,6 @@ use DateTimeImmutable;
 use InvalidArgumentException;
 use NIN\NationalIdentificationNumbers\Sweden\SwedenCoordinationIdentificationNumber;
 use NIN\NationalIdentificationNumbers\Sweden\SwedenPersonalIdentificationNumber;
-use NIN\NationalIdentificationNumbers\Sweden\SwedenNationalIdentificationNumber;
 
 abstract class SwedenNationalIdentificationNumberParser
 {
