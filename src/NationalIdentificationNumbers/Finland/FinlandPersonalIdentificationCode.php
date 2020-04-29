@@ -49,11 +49,11 @@ class FinlandPersonalIdentificationCode implements NationalIdentificationNumberI
         return sprintf("%02d%02d%02d%s%03d%s", (int)$this->date->format('d'), (int)$this->date->format('m'), (int)$this->date->format('y'), $separator, $this->individualNumber, $checksum);
     }
 
-    public static function calculateChecksum(DateTimeImmutable $date, int $individualNumber)
+    public static function calculateChecksum(DateTimeImmutable $date, int $individualNumber): string
     {
         $numberMap = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C', 'D', 'E', 'F', 'H', 'J', 'K', 'L', 'M', 'N', 'P', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y'];
 
-        $number = (int)(sprintf('%02d%02d%02d%03d', $date->format('d'), $date->format('m'), $date->format('y'), $individualNumber));
+        $number = (int)sprintf('%02d%02d%02d%03d', $date->format('d'), $date->format('m'), $date->format('y'), $individualNumber);
 
         return $numberMap[round(fmod($number / 31.0, 1) * 31)];
     }

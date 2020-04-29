@@ -28,7 +28,6 @@ This library validates the structure of individual identification numbers. Curre
 use NIN\NationalIdentificationNumberParser;
 
 $nin = NationalIdentificationNumberParser::tryParse('890629-1870', 'SE');
-
 echo $nin;                   // '890629-1870'
 echo $nin->getCountryCode(); // 'SE'
 ```

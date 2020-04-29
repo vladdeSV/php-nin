@@ -27,7 +27,7 @@ abstract class SwedenNationalIdentificationNumberParser
         . '(?<individualNumber>\d{3})'
         . '(?<checksum>\d)$/';
 
-    public static final function parse(string $personalIdentificationNumber): SwedenNationalIdentificationNumber
+    final public static function parse(string $personalIdentificationNumber): SwedenNationalIdentificationNumber
     {
         $matches = [];
 
@@ -73,7 +73,7 @@ abstract class SwedenNationalIdentificationNumberParser
     private static function calculateYearFromTwoDigitYearAndSeparator(int $twoDigitYear, string $separator): int
     {
         $currentYear = (int)(new DateTimeImmutable())->format('Y');
-        $year = ((int)(($currentYear - $twoDigitYear) / 100)) * 100 + $twoDigitYear;
+        $year = ((int)(($currentYear - $twoDigitYear) / 100) * 100) + $twoDigitYear;
         if ($separator === '+') {
             $year -= 100;
         }
@@ -83,7 +83,7 @@ abstract class SwedenNationalIdentificationNumberParser
 
     private static function isCoordinationNumberByDay(int $day): bool
     {
-        return $day > 60 && $day <= (31 + 60);
+        return ($day > 60) && ($day <= 31 + 60);
     }
 
 }

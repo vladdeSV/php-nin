@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 
 namespace NIN\Parsers;
 
@@ -53,19 +54,14 @@ abstract class DenmarkNationalIdentificationNumberParser
         $year = null;
 
         if (self::isNumberInRange($centuryDigit, 0, 3)) {
-
             $year = 1900 + $twoDigitYear;
-
-        } else if ($centuryDigit === 4 || $centuryDigit === 9) {
-
+        } else if (($centuryDigit === 4) || ($centuryDigit === 9)) {
             if (self::isNumberInRange($twoDigitYear, 0, 36)) {
                 $year = 2000 + $twoDigitYear;
             } else if (self::isNumberInRange($twoDigitYear, 37, 99)) {
                 $year = 1900 + $twoDigitYear;
             }
-
         } else if (self::isNumberInRange($centuryDigit, 5, 8)) {
-
             if (self::isNumberInRange($twoDigitYear, 0, 57)) {
                 $year = 2000 + $twoDigitYear;
             } else if (self::isNumberInRange($twoDigitYear, 58, 99)) {
@@ -78,6 +74,6 @@ abstract class DenmarkNationalIdentificationNumberParser
 
     private static function isNumberInRange(int $number, int $a, int $b): bool
     {
-        return $number >= $a && $number <= $b;
+        return ($number >= $a) && ($number <= $b);
     }
 }

@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 
 namespace NIN\Tests\Helpers;
 
@@ -25,7 +26,7 @@ class CountryCodeHelperTest extends TestCase
         self::assertFalse(CountryCodeHelper::isValidCountryCode($countryCode));
     }
 
-    public function validCountryCodes()
+    public function validCountryCodes(): array
     {
         return [
             ['SE'],
@@ -36,7 +37,7 @@ class CountryCodeHelperTest extends TestCase
         ];
     }
 
-    public function invalidCountryCodes()
+    public function invalidCountryCodes(): array
     {
         return [
             ['se'],

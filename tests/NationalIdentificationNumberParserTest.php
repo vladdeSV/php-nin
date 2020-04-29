@@ -25,6 +25,7 @@ class NationalIdentificationNumberParserTest extends TestCase
         self::assertSame($countryCode, $nationalIdentificationNumber->getCountryCode());
     }
 
+    /** @noinspection PhpUnhandledExceptionInspection */
     public function testParseInvalidNationalIdentificationNumber()
     {
         self::expectException(InvalidArgumentException::class);

@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 
 namespace NIN\Parsers;
 
@@ -18,7 +19,7 @@ abstract class FinlandNationalIdentificationNumberParser
         . '(?<checksum>[\dA-Y])'
         . '$/';
 
-    public static function parse(string $nationalIdentificationNumber)
+    public static function parse(string $nationalIdentificationNumber): FinlandPersonalIdentificationCode
     {
         $matches = [];
         if (!preg_match(self::REGEX_PERSONAL_IDENTITY_CODE, $nationalIdentificationNumber, $matches)) {
