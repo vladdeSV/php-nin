@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace NIN\Parsers;
@@ -47,7 +48,7 @@ abstract class FinlandNationalIdentificationNumberParser
         $date = DateTimeImmutable::createFromFormat('Y-m-d', "$year-$month-$day");
 
         if (FinlandPersonalIdentificationCode::calculateChecksum($date, $individualNumber) !== $checksum) {
-            throw new InvalidArgumentException("Invalid checksum.");
+            throw new InvalidArgumentException('Invalid checksum.');
         }
 
         return new FinlandPersonalIdentificationCode($date, $individualNumber);
@@ -70,6 +71,7 @@ abstract class FinlandNationalIdentificationNumberParser
         }
 
         assert($century !== null);
+
         return $century;
     }
 }

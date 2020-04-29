@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace NIN\Tests\Parsers;
@@ -12,6 +13,7 @@ class IcelandNationalIdentificationNumberParserTest extends TestCase
 {
     /**
      * @dataProvider validPersonalIdentityCodes
+     *
      * @param string $identificationNumber
      */
     public function testValidPersonalIdentityCode(string $identificationNumber)
@@ -21,6 +23,7 @@ class IcelandNationalIdentificationNumberParserTest extends TestCase
 
     /**
      * @dataProvider invalidPersonalIdentityCodes
+     *
      * @param string $identificationNumber
      */
     public function testInvalidPersonalIdentityCode($identificationNumber)
@@ -32,6 +35,7 @@ class IcelandNationalIdentificationNumberParserTest extends TestCase
 
     /**
      * @dataProvider validPersonalIdentityCodes
+     *
      * @param string $identificationNumber
      */
     public function testToString(string $identificationNumber)
@@ -43,6 +47,7 @@ class IcelandNationalIdentificationNumberParserTest extends TestCase
 
     /**
      * @dataProvider validPersonalIdentityCodes
+     *
      * @param string $identificationNumber
      */
     public function testGetCountryCode(string $identificationNumber)

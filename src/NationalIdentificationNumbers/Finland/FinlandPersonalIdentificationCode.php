@@ -33,7 +33,7 @@ class FinlandPersonalIdentificationCode implements NationalIdentificationNumberI
         $separator = $this->getSeparatorFromDate($this->date);
         $checksum = self::calculateChecksum($this->date, $this->individualNumber);
 
-        return sprintf("%02d%02d%02d%s%03d%s", (int)$this->date->format('d'), (int)$this->date->format('m'), (int)$this->date->format('y'), $separator, $this->individualNumber, $checksum);
+        return sprintf('%02d%02d%02d%s%03d%s', (int)$this->date->format('d'), (int)$this->date->format('m'), (int)$this->date->format('y'), $separator, $this->individualNumber, $checksum);
     }
 
     public static function calculateChecksum(DateTimeImmutable $date, int $individualNumber): string

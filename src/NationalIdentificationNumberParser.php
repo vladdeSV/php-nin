@@ -50,5 +50,4 @@ final class NationalIdentificationNumberParser
             return null;
         }
     }
-
 }
