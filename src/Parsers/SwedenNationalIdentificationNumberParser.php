@@ -7,6 +7,7 @@ namespace NIN\Parsers;
 use DateTimeImmutable;
 use InvalidArgumentException;
 use NIN\NationalIdentificationNumbers\Sweden\SwedenCoordinationIdentificationNumber;
+use NIN\NationalIdentificationNumbers\Sweden\SwedenNationalIdentificationNumber;
 use NIN\NationalIdentificationNumbers\Sweden\SwedenPersonalIdentificationNumber;
 
 abstract class SwedenNationalIdentificationNumberParser
