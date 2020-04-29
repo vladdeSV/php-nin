@@ -3,9 +3,6 @@ declare(strict_types=1);
 
 namespace NIN\NationalIdentificationNumbers\Norway;
 
-/**
- * D-numbers are assigned to people who temporarily reside in the country, eg. sailors and the tourist industry
- */
 class NorwayDNumber extends NorwayNationalIdentificationNumber
 {
     public function __toString(): string

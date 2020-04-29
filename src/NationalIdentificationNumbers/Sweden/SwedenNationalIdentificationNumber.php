@@ -36,7 +36,6 @@ abstract class SwedenNationalIdentificationNumber implements NationalIdentificat
             return (int)$number;
         }, str_split($modifiedNumbers));
 
-        // source: https://sv.wikipedia.org/wiki/Personnummer_i_Sverige#Kontrollsiffran
         return (10 - (array_sum($numbers) % 10)) % 10;
     }
 

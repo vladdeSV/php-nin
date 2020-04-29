@@ -4,25 +4,6 @@ declare(strict_types=1);
 
 namespace NIN\NationalIdentificationNumbers\Sweden;
 
-/**
- * - Follows following formats
- *   - "YYMMDD±NNNC"
- *     - YY = year, two digit
- *     - MM = month, two digit
- *     - DD = day, two digit
- *     - ± = "-" if less than 100 years old, otherwise "+"
- *     - NNN = individual number, three digit
- *     - C = checksum, single digit
- *   - "YYYYMMDDNNNC", however is not official standard
- *     - YYYY = year, four digit
- *     - MM = month, two digit
- *     - DD = day, two digit
- *     - NNN = individual number, three digit
- *     - C = checksum, single digit
- * - Individual numbers are even for females and odd for males
- * - Checksum studied from
- *   - https://sv.wikipedia.org/wiki/Personnummer_i_Sverige#Kontrollsiffran
- */
 class SwedenCoordinationIdentificationNumber extends SwedenNationalIdentificationNumber
 {
     public function __toString(): string

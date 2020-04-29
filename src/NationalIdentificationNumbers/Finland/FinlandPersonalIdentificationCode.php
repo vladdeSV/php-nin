@@ -7,19 +7,6 @@ namespace NIN\NationalIdentificationNumbers\Finland;
 use DateTimeImmutable;
 use NIN\NationalIdentificationNumbers\NationalIdentificationNumberInterface;
 
-/**
- * - Follows format "DDMMYYCNNNK"
- *   - DD = day, two digit
- *   - MM = month, two digit
- *   - YY = year, two digit
- *   - C = separator, '+' for 1800s, '-' for 1900s, and 'A' for 2000s
- *   - NNN = individual number, three digit
- *   - K = checksum, single digit or uppercase letter
- * - Individual numbers are even for females and odd for males
- * - Checksum studied from
- *   - https://dvv.fi/en/personal-identity-code
- *   - https://en.wikipedia.org/wiki/National_identification_number#Finland
- */
 class FinlandPersonalIdentificationCode implements NationalIdentificationNumberInterface
 {
     public const COUNTRY_CODE = 'FI';

@@ -7,17 +7,6 @@ namespace NIN\NationalIdentificationNumbers\Norway;
 use DateTimeImmutable;
 use NIN\NationalIdentificationNumbers\NationalIdentificationNumberInterface;
 
-/**
- * - Follows format "DDMMYYNNNCC"
- *   - DD = day, two digit
- *   - MM = month, two digit
- *   - YY = year, two digit
- *   - NNN = individual number / century group, three digit
- *   - CC = checksums, two digit
- * - Individual numbers are even for females and odd for males
- * - Checksum studied from
- *   - github: svenheden/norwegian-birth-number-validator
- */
 abstract class NorwayNationalIdentificationNumber implements NationalIdentificationNumberInterface
 {
     public const COUNTRY_CODE = 'NO';

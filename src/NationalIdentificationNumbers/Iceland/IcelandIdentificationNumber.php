@@ -6,18 +6,6 @@ namespace NIN\NationalIdentificationNumbers\Iceland;
 use DateTimeImmutable;
 use NIN\NationalIdentificationNumbers\NationalIdentificationNumberInterface;
 
-/**
- * - Follows format "DDMMYYNNKC"
- *   - DD = day, two digit
- *   - MM = month, two digit
- *   - YY = year, two digit
- *   - NN = individual number, two digit
- *   - K = checksum, single digit
- *   - C = century digit
- * - Checksum studied from
- *   - https://www.skra.is/english/individuals/me-and-my-family/my-registration/id-numbers/
- *   - https://www.skra.is/thjonusta/einstaklingar/eg-i-thjodskra/um-kennitolur/
- */
 class IcelandIdentificationNumber implements NationalIdentificationNumberInterface
 {
     public const COUNTRY_CODE = 'IS';
@@ -46,14 +34,14 @@ class IcelandIdentificationNumber implements NationalIdentificationNumberInterfa
         $numbers = sprintf('%02d%02d%02d%02d', (int)$date->format('d'), (int)$date->format('m'), (int)$date->format('y'), $individualNumber);
 
         $sum = (
-                (3 * (int)$numbers[0]) +
-                (2 * (int)$numbers[1]) +
-                (7 * (int)$numbers[2]) +
-                (6 * (int)$numbers[3]) +
-                (5 * (int)$numbers[4]) +
-                (4 * (int)$numbers[5]) +
-                (3 * (int)$numbers[6]) +
-                (2 * (int)$numbers[7])
+                3 * (int)$numbers[0] +
+                2 * (int)$numbers[1] +
+                7 * (int)$numbers[2] +
+                6 * (int)$numbers[3] +
+                5 * (int)$numbers[4] +
+                4 * (int)$numbers[5] +
+                3 * (int)$numbers[6] +
+                2 * (int)$numbers[7]
             ) % 11;
 
         if ($sum > 0) {

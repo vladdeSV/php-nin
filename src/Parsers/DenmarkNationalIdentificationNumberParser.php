@@ -7,9 +7,6 @@ use DateTimeImmutable;
 use InvalidArgumentException;
 use NIN\NationalIdentificationNumbers\Denmark\DenmarkPersonalIdentificationNumber;
 
-/**
- * https://da.wikipedia.org/wiki/CPR-nummer
- */
 abstract class DenmarkNationalIdentificationNumberParser
 {
     private const REGEX_PERSONAL_IDENTIFICATION_NUMBER = /** @lang PhpRegExp */
