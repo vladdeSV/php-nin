@@ -13,6 +13,7 @@ class SwedenNationalIdentificationNumberParserTest extends TestCase
 {
     /**
      * @dataProvider validPersonalIdentityNumbers
+     *
      * @param string $personalIdentityNumber
      */
     public function testValid(string $personalIdentityNumber)
@@ -22,6 +23,7 @@ class SwedenNationalIdentificationNumberParserTest extends TestCase
 
     /**
      * @dataProvider validFullPersonalIdentityNumbers
+     *
      * @param string $personalIdentityNumber
      */
     public function testValidFullLength(string $personalIdentityNumber)
@@ -31,6 +33,7 @@ class SwedenNationalIdentificationNumberParserTest extends TestCase
 
     /**
      * @dataProvider invalidPersonalIdentityNumbers
+     *
      * @param string $personalIdentityNumber
      */
     public function testInvalid(string $personalIdentityNumber)
@@ -42,6 +45,7 @@ class SwedenNationalIdentificationNumberParserTest extends TestCase
 
     /**
      * @dataProvider validPersonalIdentityNumbers
+     *
      * @param string $personalIdentityNumber
      */
     public function testToString(string $personalIdentityNumber)
@@ -54,6 +58,7 @@ class SwedenNationalIdentificationNumberParserTest extends TestCase
 
     /**
      * @dataProvider validFullPersonalIdentityNumbers
+     *
      * @param string $personalIdentityNumber12
      * @param string $personalIdentityNumber10
      */
@@ -69,6 +74,7 @@ class SwedenNationalIdentificationNumberParserTest extends TestCase
 
     /**
      * @dataProvider validPersonalIdentityNumbers
+     *
      * @param string $personalIdentityNumber
      */
     public function testCountryCode(string $personalIdentityNumber)
@@ -90,12 +96,12 @@ class SwedenNationalIdentificationNumberParserTest extends TestCase
             ['200314-4355'],
             ['200374-4352'],
             ['180970+4065'],
-            ['690688-3381']
+            ['690688-3381'],
         ];
     }
 
     /**
-     * Each item is in format [12-digit, 10-digit]
+     * Each item is in format [12-digit, 10-digit].
      *
      * @return array
      */

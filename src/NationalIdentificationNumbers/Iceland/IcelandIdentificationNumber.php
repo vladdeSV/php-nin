@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace NIN\NationalIdentificationNumbers\Iceland;
@@ -34,7 +35,7 @@ class IcelandIdentificationNumber implements NationalIdentificationNumberInterfa
         $numbers = sprintf('%02d%02d%02d%02d', (int)$date->format('d'), (int)$date->format('m'), (int)$date->format('y'), $individualNumber);
 
         $sum = (
-                3 * (int)$numbers[0] +
+            3 * (int)$numbers[0] +
                 2 * (int)$numbers[1] +
                 7 * (int)$numbers[2] +
                 6 * (int)$numbers[3] +
@@ -42,7 +43,7 @@ class IcelandIdentificationNumber implements NationalIdentificationNumberInterfa
                 4 * (int)$numbers[5] +
                 3 * (int)$numbers[6] +
                 2 * (int)$numbers[7]
-            ) % 11;
+        ) % 11;
 
         if ($sum > 0) {
             $sum = 11 - $sum;
@@ -58,10 +59,14 @@ class IcelandIdentificationNumber implements NationalIdentificationNumberInterfa
         $century = (int)((int)$date->format('Y') / 100);
         if ($century === 18) {
             $centuryDigit = 8;
-        } else if ($century === 19) {
-            $centuryDigit = 9;
-        } else if ($century === 20) {
-            $centuryDigit = 0;
+        } else {
+            if ($century === 19) {
+                $centuryDigit = 9;
+            } else {
+                if ($century === 20) {
+                    $centuryDigit = 0;
+                }
+            }
         }
 
         return $centuryDigit;

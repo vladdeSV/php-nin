@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace NIN\Parsers;
@@ -39,7 +40,7 @@ abstract class NorwayNationalIdentificationNumberParser
         }
 
         if ($isDNumber && $isHNumber) {
-            throw new InvalidArgumentException("Cannot be both D-number and H-number.");
+            throw new InvalidArgumentException('Cannot be both D-number and H-number.');
         }
 
         $year = self::getYearFromIndividualNumberAndTwoDigitYear($individualNumber, $YY);
@@ -57,8 +58,10 @@ abstract class NorwayNationalIdentificationNumberParser
 
         if ($isDNumber) {
             return new NorwayDNumber($date, $individualNumber);
-        } else if ($isHNumber) {
-            return new NorwayHNumber($date, $individualNumber);
+        } else {
+            if ($isHNumber) {
+                return new NorwayHNumber($date, $individualNumber);
+            }
         }
 
         return new NorwayBirthNumber($date, $individualNumber);
@@ -77,13 +80,19 @@ abstract class NorwayNationalIdentificationNumberParser
 
         if (self::isNumberInRange($individualNumber, 500, 749) && self::isNumberInRange($twoDigitYear, 54, 99)) {
             $year = (int)"18{$twoDigitYear}";
-        } else if (self::isNumberInRange($individualNumber, 499, 999) && self::isNumberInRange($twoDigitYear, 40, 99)) {
-            // special case for people born between 1940 -> 1999, span also includes 900-999
-            $year = (int)"19{$twoDigitYear}";
-        } else if (self::isNumberInRange($individualNumber, 0, 499) && self::isNumberInRange($twoDigitYear, 00, 99)) {
-            $year = (int)"19{$twoDigitYear}";
-        } else if (self::isNumberInRange($individualNumber, 500, 999) && self::isNumberInRange($twoDigitYear, 00, 39)) {
-            $year = (int)"20{$twoDigitYear}";
+        } else {
+            if (self::isNumberInRange($individualNumber, 499, 999) && self::isNumberInRange($twoDigitYear, 40, 99)) {
+                // special case for people born between 1940 -> 1999, span also includes 900-999
+                $year = (int)"19{$twoDigitYear}";
+            } else {
+                if (self::isNumberInRange($individualNumber, 0, 499) && self::isNumberInRange($twoDigitYear, 00, 99)) {
+                    $year = (int)"19{$twoDigitYear}";
+                } else {
+                    if (self::isNumberInRange($individualNumber, 500, 999) && self::isNumberInRange($twoDigitYear, 00, 39)) {
+                        $year = (int)"20{$twoDigitYear}";
+                    }
+                }
+            }
         }
 
         return $year;

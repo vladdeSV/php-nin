@@ -12,7 +12,7 @@ class CountryCodeHelper
     }
 
     /**
-     * Two-letter country codes (ISO 3166-1)
+     * Two-letter country codes (ISO 3166-1).
      *
      * @link https://datahub.io/core/country-list
      */
@@ -267,5 +267,4 @@ class CountryCodeHelper
         'ZM', // Zambia
         'ZW', // Zimbabwe
     ];
-
 }

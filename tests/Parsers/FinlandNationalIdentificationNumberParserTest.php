@@ -13,6 +13,7 @@ class FinlandNationalIdentificationNumberParserTest extends TestCase
 {
     /**
      * @dataProvider validPersonalIdentityCodes
+     *
      * @param string $personalIdentityCode
      */
     public function testValidPersonalIdentityCode(string $personalIdentityCode)
@@ -22,6 +23,7 @@ class FinlandNationalIdentificationNumberParserTest extends TestCase
 
     /**
      * @dataProvider invalidPersonalIdentityCodes
+     *
      * @param string $personalIdentityCode
      */
     public function testInvalidPersonalIdentityCode($personalIdentityCode)
@@ -33,6 +35,7 @@ class FinlandNationalIdentificationNumberParserTest extends TestCase
 
     /**
      * @dataProvider validPersonalIdentityCodes
+     *
      * @param string $personalIdentityCode
      */
     public function testToString(string $personalIdentityCode)
@@ -44,6 +47,7 @@ class FinlandNationalIdentificationNumberParserTest extends TestCase
 
     /**
      * @dataProvider validPersonalIdentityCodes
+     *
      * @param string $personalIdentityCode
      */
     public function testGetCountryCode(string $personalIdentityCode)

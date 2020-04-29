@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace NIN\Parsers;
@@ -37,7 +38,7 @@ abstract class IcelandNationalIdentificationNumberParser
         $year = self::getCenturyFromCenturyDigit($centuryDigit) + $YY;
 
         if (!checkdate($MM, $DD, $year)) {
-            throw new InvalidArgumentException("Invalid date.");
+            throw new InvalidArgumentException('Invalid date.');
         }
 
         $date = DateTimeImmutable::createFromFormat('Y-m-d', "$year-$MM-$DD");
@@ -55,13 +56,16 @@ abstract class IcelandNationalIdentificationNumberParser
 
         if ($centuryDigit === 8) {
             $century = 1800;
-        } else if ($centuryDigit === 9) {
-            $century = 1900;
-        } else if ($centuryDigit === 0) {
-            $century = 2000;
+        } else {
+            if ($centuryDigit === 9) {
+                $century = 1900;
+            } else {
+                if ($centuryDigit === 0) {
+                    $century = 2000;
+                }
+            }
         }
 
         return $century;
     }
-
 }
