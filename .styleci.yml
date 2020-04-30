@@ -1,0 +1,9 @@
+preset: recommended
+
+disabled:
+  - concat_without_spaces
+  - cast_spaces
+  - elseif
+
+enabled:
+  - concat_with_spaces
