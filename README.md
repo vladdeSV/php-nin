@@ -3,6 +3,7 @@
 # National Identification Numbers
 [![php version](https://img.shields.io/badge/php-%3E%3D7.2-8892BF.svg?logo=php)](https://github.com/vladdeSV/php-nin/blob/develop/composer.json)
 [![codecov](https://codecov.io/gh/vladdeSV/php-nin/branch/develop/graph/badge.svg)](https://codecov.io/gh/vladdeSV/php-nin)
+[![styleci](https://github.styleci.io/repos/247304996/shield?style=flat&branch=develop)](https://github.styleci.io/repos/247304996)
 [![develop](https://github.com/vladdeSV/php-nin/workflows/develop/badge.svg?branch=develop)](https://github.com/vladdeSV/php-nin/actions?query=workflow%3Adevelop)
 
 This library validates the structure of individual identification numbers. Currently supporting all Nordic countries.
