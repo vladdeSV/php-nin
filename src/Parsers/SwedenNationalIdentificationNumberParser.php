@@ -10,7 +10,7 @@ use NIN\NationalIdentificationNumbers\Sweden\SwedenCoordinationIdentificationNum
 use NIN\NationalIdentificationNumbers\Sweden\SwedenNationalIdentificationNumber;
 use NIN\NationalIdentificationNumbers\Sweden\SwedenPersonalIdentificationNumber;
 
-abstract class SwedenNationalIdentificationNumberParser
+final class SwedenNationalIdentificationNumberParser
 {
     private const REGEX_PERSONAL_IDENTITY_NUMBER = /** @lang PhpRegExp */
         '/^(?<YY>\d{2})'

@@ -8,7 +8,7 @@ use DateTimeImmutable;
 use InvalidArgumentException;
 use NIN\NationalIdentificationNumbers\Iceland\IcelandIdentificationNumber;
 
-abstract class IcelandNationalIdentificationNumberParser
+final class IcelandNationalIdentificationNumberParser
 {
     private const REGEX_IDENTIFICATION_NUMBER = /** @lang PhpRegExp */
         '/^'

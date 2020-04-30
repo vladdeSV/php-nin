@@ -11,7 +11,7 @@ use NIN\NationalIdentificationNumbers\Norway\NorwayDNumber;
 use NIN\NationalIdentificationNumbers\Norway\NorwayHNumber;
 use NIN\NationalIdentificationNumbers\Norway\NorwayNationalIdentificationNumber;
 
-abstract class NorwayNationalIdentificationNumberParser
+final class NorwayNationalIdentificationNumberParser
 {
     private const REGEX_BIRTH_NUMBER = /** @lang PhpRegExp */
         '/^(?<DD>\d{2})(?<MM>\d{2})(?<YY>\d{2})(?<individualNumber>\d{3})(?<checksum>\d{2})$/';
