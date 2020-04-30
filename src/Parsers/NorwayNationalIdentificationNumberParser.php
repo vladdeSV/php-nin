@@ -14,8 +14,15 @@ use NIN\NationalIdentificationNumbers\Norway\NorwayNationalIdentificationNumber;
 final class NorwayNationalIdentificationNumberParser
 {
     private const REGEX_BIRTH_NUMBER = /** @lang PhpRegExp */
-        '/^(?<DD>\d{2})(?<MM>\d{2})(?<YY>\d{2})(?<individualNumber>\d{3})(?<checksum>\d{2})$/';
+        '/^'
+        . '(?<DD>\d{2})'
+        . '(?<MM>\d{2})'
+        . '(?<YY>\d{2})'
+        . '(?<individualNumber>\d{3})'
+        . '(?<checksum>\d{2})'
+        . '$/';
 
+    /** @noinspection DuplicatedCode */
     public static function parse(string $nationalIdentificationNumber): NorwayNationalIdentificationNumber
     {
         $matches = [];

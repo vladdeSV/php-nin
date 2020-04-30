@@ -21,6 +21,7 @@ final class IcelandNationalIdentificationNumberParser
         . '(?<centuryDigit>[890])'
         . '$/';
 
+    /** @noinspection DuplicatedCode */
     public static function parse(string $identificationNumber): IcelandIdentificationNumber
     {
         $matches = [];

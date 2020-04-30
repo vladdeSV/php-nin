@@ -16,11 +16,7 @@ final class DenmarkNationalIdentificationNumberParser
         . '(?<MM>\d{2})'
         . '(?<YY>\d{2})'
         . '-?'
-        . '(?<serialNumber>'
-        . '' . '(?<centuryDigit>\d)(?<individualNumber>'
-        . '' . '' . '(?<uniqueNumbers>\d{2})(?<checksum>\d)'
-        . '' . ')'
-        . ')'
+        . '(?<serialNumber>(?<centuryDigit>\d)\d{3})'
         . '$/';
 
     public static function parse(string $personalIdentificationNumber): DenmarkPersonalIdentificationNumber

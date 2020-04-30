@@ -20,6 +20,14 @@ use NIN\Parsers\SwedenNationalIdentificationNumberParser;
 
 final class NationalIdentificationNumberParser
 {
+    /**
+     * @param string $nationalIdentificationNumber
+     * @param string $countryCode
+     *
+     * @return NationalIdentificationNumberInterface
+     *
+     * @throws Exception
+     */
     public static function parse(string $nationalIdentificationNumber, string $countryCode): NationalIdentificationNumberInterface
     {
         if (!CountryCodeHelper::isValidCountryCode($countryCode)) {
@@ -42,6 +50,12 @@ final class NationalIdentificationNumberParser
         }
     }
 
+    /**
+     * @param string $nationalIdentificationNumber
+     * @param string $countryCode
+     *
+     * @return NationalIdentificationNumberInterface|null
+     */
     public static function tryParse(string $nationalIdentificationNumber, string $countryCode): ?NationalIdentificationNumberInterface
     {
         try {

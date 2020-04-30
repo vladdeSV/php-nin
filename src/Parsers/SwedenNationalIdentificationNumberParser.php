@@ -13,19 +13,23 @@ use NIN\NationalIdentificationNumbers\Sweden\SwedenPersonalIdentificationNumber;
 final class SwedenNationalIdentificationNumberParser
 {
     private const REGEX_PERSONAL_IDENTITY_NUMBER = /** @lang PhpRegExp */
-        '/^(?<YY>\d{2})'
+        '/^'
+        . '(?<YY>\d{2})'
         . '(?<MM>\d{2})'
         . '(?<DD>\d{2})'
         . '(?<separator>[-+])'
         . '(?<individualNumber>\d{3})'
-        . '(?<checksum>\d)$/';
+        . '(?<checksum>\d)'
+        . '$/';
 
     private const REGEX_PERSONAL_IDENTITY_NUMBER_FULL = /** @lang PhpRegExp */
-        '/^(?<YYYY>\d{4})'
+        '/^'
+        . '(?<YYYY>\d{4})'
         . '(?<MM>\d{2})'
         . '(?<DD>\d{2})'
         . '(?<individualNumber>\d{3})'
-        . '(?<checksum>\d)$/';
+        . '(?<checksum>\d)'
+        . '$/';
 
     final public static function parse(string $personalIdentificationNumber): SwedenNationalIdentificationNumber
     {

@@ -34,16 +34,7 @@ class IcelandIdentificationNumber implements NationalIdentificationNumberInterfa
     {
         $numbers = sprintf('%02d%02d%02d%02d', (int)$date->format('d'), (int)$date->format('m'), (int)$date->format('y'), $individualNumber);
 
-        $sum = (
-            3 * (int)$numbers[0] +
-                2 * (int)$numbers[1] +
-                7 * (int)$numbers[2] +
-                6 * (int)$numbers[3] +
-                5 * (int)$numbers[4] +
-                4 * (int)$numbers[5] +
-                3 * (int)$numbers[6] +
-                2 * (int)$numbers[7]
-        ) % 11;
+        $sum = (3 * (int)$numbers[0] + 2 * (int)$numbers[1] + 7 * (int)$numbers[2] + 6 * (int)$numbers[3] + 5 * (int)$numbers[4] + 4 * (int)$numbers[5] + 3 * (int)$numbers[6] + 2 * (int)$numbers[7]) % 11;
 
         if ($sum > 0) {
             $sum = 11 - $sum;
