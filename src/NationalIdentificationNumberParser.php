@@ -24,9 +24,9 @@ final class NationalIdentificationNumberParser
      * @param string $nationalIdentificationNumber
      * @param string $countryCode
      *
-     * @return NationalIdentificationNumberInterface
-     *
      * @throws Exception
+     *
+     * @return NationalIdentificationNumberInterface
      */
     public static function parse(string $nationalIdentificationNumber, string $countryCode): NationalIdentificationNumberInterface
     {

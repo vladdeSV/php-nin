@@ -6,13 +6,14 @@
       <option name="COMMA_AFTER_LAST_ARRAY_ELEMENT" value="true" />
       <option name="PHPDOC_BLANK_LINE_BEFORE_TAGS" value="true" />
       <option name="PHPDOC_BLANK_LINES_AROUND_PARAMETERS" value="true" />
+      <option name="THROWS_WEIGHT" value="1" />
+      <option name="RETURN_WEIGHT" value="2" />
       <option name="LOWER_CASE_BOOLEAN_CONST" value="true" />
       <option name="LOWER_CASE_NULL_CONST" value="true" />
       <option name="ELSE_IF_STYLE" value="SEPARATE" />
       <option name="VARIABLE_NAMING_STYLE" value="CAMEL_CASE" />
       <option name="KEEP_BLANK_LINES_AFTER_LBRACE" value="0" />
       <option name="FORCE_SHORT_DECLARATION_ARRAY_STYLE" value="true" />
-      <option name="NULL_TYPE_POSITION" value="IN_THE_BEGINNING" />
     </PHPCodeStyleSettings>
     <codeStyleSettings language="PHP">
       <option name="KEEP_BLANK_LINES_IN_DECLARATIONS" value="1" />
