@@ -1,6 +1,6 @@
 {
   "name": "vladdesv/php-nin",
-  "description": "National Identification Number",
+  "description": "Verify structure of individual national identification numbers",
   "type": "library",
   "license": "MIT",
   "authors": [
