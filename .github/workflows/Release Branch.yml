@@ -1,14 +1,3 @@
-# todo:
-#  run on multiple php versions:
-#  - 7.2
-#  - 7.3
-#  - 7.4
-#  - (7.1?)
-#  run on multiple OSes:
-#  - windows
-#  - linux
-#  - mac
-
 name: release
 
 on:
@@ -19,10 +8,18 @@ on:
 
 jobs:
   build:
-    runs-on: ubuntu-latest
-
+    runs-on: ${{ matrix.operating-system }}
+    strategy:
+      matrix:
+        operating-system: [ubuntu-latest, windows-latest, macOS-latest]
+        php-versions: ['7.2', '7.3', '7.4']
     steps:
       - uses: actions/checkout@v2
+
+      - name: Install PHP version
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: ${{ matrix.php-versions }}
 
       - name: Install dependencies
         run: composer install --prefer-dist --no-progress --no-suggest

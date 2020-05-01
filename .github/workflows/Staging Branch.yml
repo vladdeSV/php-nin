@@ -21,10 +21,6 @@ jobs:
         with:
           php-version: ${{ matrix.php-versions }}
 
-      # debug: to see what really happens
-      - name: debug, check php version
-        run: php -v
-
       - name: Install dependencies
         run: composer install --prefer-dist --no-progress --no-suggest
 
