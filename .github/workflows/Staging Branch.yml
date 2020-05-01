@@ -4,18 +4,14 @@
 #  - 7.3
 #  - 7.4
 #  - (7.1?)
-#  run on multiple OSes:
-#  - windows
-#  - linux
-#  - mac
 
 name: release
 
 on:
   push:
-    branches: [ release ]
+    branches: [ staging ]
   pull_request:
-    branches: [ release ]
+    branches: [ staging ]
 
 jobs:
   build:
