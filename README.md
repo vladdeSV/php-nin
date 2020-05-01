@@ -2,6 +2,7 @@
 
 # National Identification Numbers
 [![php version](https://img.shields.io/badge/php-%3E%3D7.2-8892BF.svg?logo=php)](https://github.com/vladdeSV/php-nin/blob/develop/composer.json)
+[![latest release](https://img.shields.io/packagist/v/vladdeSV/php-nin.svg?style=flat)](https://packagist.org/packages/vladdeSV/php-nin)
 [![codecov](https://codecov.io/gh/vladdeSV/php-nin/branch/release/graph/badge.svg)](https://codecov.io/gh/vladdeSV/php-nin)
 [![styleci](https://github.styleci.io/repos/247304996/shield?style=flat&branch=release)](https://github.styleci.io/repos/247304996)
 
