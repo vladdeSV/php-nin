@@ -84,6 +84,14 @@ class SwedenNationalIdentificationNumberParserTest extends TestCase
         self::assertSame(SwedenNationalIdentificationNumber::COUNTRY_CODE, $snin->getCountryCode());
     }
 
+    public function testWithoutSeparator()
+    {
+        $snin = SwedenNationalIdentificationNumberParser::parse('1902282258');
+
+        self::assertNotNull($snin);
+        self::assertSame('190228-2258', $snin->__toString());
+    }
+
     public function validPersonalIdentityNumbers(): array
     {
         return [
@@ -123,7 +131,6 @@ class SwedenNationalIdentificationNumberParserTest extends TestCase
         return [
             [''],
             ['abc'],
-            ['1902282258'], // missing separator
             ['123456-7890'],
             ['190228-4048'], // valid date, incorrect checksum
             ['190229-4048'], // correct checksum, invalid date

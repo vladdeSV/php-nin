@@ -17,7 +17,7 @@ final class SwedenNationalIdentificationNumberParser
         . '(?<YY>\d{2})'
         . '(?<MM>\d{2})'
         . '(?<DD>\d{2})'
-        . '(?<separator>[-+])'
+        . '(?<separator>[-+])?'
         . '(?<individualNumber>\d{3})'
         . '(?<checksum>\d)'
         . '$/';
@@ -38,7 +38,7 @@ final class SwedenNationalIdentificationNumberParser
         $year = null;
         if (preg_match(self::REGEX_PERSONAL_IDENTITY_NUMBER, $personalIdentificationNumber, $matches)) {
             $twoDigitYear = (int)$matches['YY'];
-            $separator = $matches['separator'];
+            $separator = $matches['separator'] ?? '-';
             $year = self::calculateYearFromTwoDigitYearAndSeparator($twoDigitYear, $separator);
         } else {
             if (preg_match(self::REGEX_PERSONAL_IDENTITY_NUMBER_FULL, $personalIdentificationNumber, $matches)) {
